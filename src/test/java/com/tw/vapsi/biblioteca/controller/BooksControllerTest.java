@@ -43,13 +43,14 @@ class BooksControllerTest extends ControllerTestHelper {
 
     }*/
 
-   /* @Test
-    void shouldReturn404WhenLibraryHasNoBooks() throws Exception {
+   @Test
+    void shouldReturn404WhenLibraryHasNoBooks() throws Exception, NoBooksInLibraryException {
+        when(bookService.getList()).thenReturn(null);
 
-        mockMvc.perform(get("/books"))
-                //.andExpect(jsonPath("$.length()").value(0))
+       mockMvc.perform(get("/books"))
                 .andExpect(status().is4xxClientError())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
-    }*/
+
+    }
 }
