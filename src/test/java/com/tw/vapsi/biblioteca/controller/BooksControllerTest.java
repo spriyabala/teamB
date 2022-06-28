@@ -22,14 +22,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = BooksController.class)
 class BooksControllerTest extends ControllerTestHelper {
-   /* @Autowired
+    @Autowired
 
     private MockMvc mockMvc;
     @MockBean
     private BookService bookService;
     @Test
     @WithMockUser
-    void shouldReturnListOfBooks() throws Exception, NoBooksInLibraryException {
+    void shouldRegstturnListOfBooks() throws Exception, NoBooksInLibraryException {
         when(bookService.getList()).thenReturn(List.of(new Book("The River of Adventures","Enid Blyton"), new Book("Muniya","NBT Publications")));
 
 
@@ -41,9 +41,9 @@ class BooksControllerTest extends ControllerTestHelper {
 
         verify(bookService,times(1)).getList();
 
-    }*/
+    }
 
-   /* @Test
+    @Test
     void shouldReturn404WhenLibraryHasNoBooks() throws Exception {
 
         mockMvc.perform(get("/books"))
@@ -51,5 +51,5 @@ class BooksControllerTest extends ControllerTestHelper {
                 .andExpect(status().is4xxClientError())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
-    }*/
+    }
 }
