@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = BooksController.class)
 class BooksControllerTest extends ControllerTestHelper {
-   /* @Autowired
+   @Autowired
 
     private MockMvc mockMvc;
     @MockBean
@@ -41,10 +41,10 @@ class BooksControllerTest extends ControllerTestHelper {
 
         verify(bookService,times(1)).getList();
 
-    }*/
+    }
 
-   @Test
-    void shouldReturn404WhenLibraryHasNoBooks() throws Exception, NoBooksInLibraryException {
+     @Test
+  void shouldReturn404WhenLibraryHasNoBooks() throws Exception, NoBooksInLibraryException {
         when(bookService.getList()).thenReturn(null);
 
        mockMvc.perform(get("/books"))
@@ -54,3 +54,4 @@ class BooksControllerTest extends ControllerTestHelper {
 
     }
 }
+
