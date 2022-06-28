@@ -5,6 +5,7 @@ import com.tw.vapsi.biblioteca.controller.helper.ControllerTestHelper;
 import com.tw.vapsi.biblioteca.exception.NoBooksInLibraryException;
 import com.tw.vapsi.biblioteca.model.Book;
 import com.tw.vapsi.biblioteca.service.BookService;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -12,7 +13,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -22,34 +25,45 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = BooksController.class)
 class BooksControllerTest extends ControllerTestHelper {
-    @Autowired
 
+   @Autowired
     private MockMvc mockMvc;
     @MockBean
     private BookService bookService;
+
     @Test
     @WithMockUser
-    void shouldRegstturnListOfBooks() throws Exception, NoBooksInLibraryException {
-        when(bookService.getList()).thenReturn(List.of(new Book("The River of Adventures","Enid Blyton"), new Book("Muniya","NBT Publications")));
+    void shouldReturnListOfBooks() throws Exception, NoBooksInLibraryException {
+        Book book1 = new Book("The River of Adventures", "Enid Blyton");
+        Book book2 = new Book("Muniya", "NBT Publications");
+
+        List<Book> list = new ArrayList<Book>();
+        list.add(book1);
+        list.add(book2);
+        when(bookService.getList()).thenReturn(list);
 
 
         mockMvc.perform(get("/books"))
-                .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json("[{\"name\": \"The River of Adventures\", \"author\": \"Enid Blyton\"}, {\"name\": \"Muniya\", \"author\": \"NBT Publications\"}]"));
+                .andExpect(MockMvcResultMatchers.view().name("booklist"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("books"));
+        // .andExpect(MockMvcResultMatchers.model().attribute("books", Matchers.arrayContaining(list.toArray())));
 
-        verify(bookService,times(1)).getList();
+
 
     }
 
+
+
     @Test
-    void shouldReturn404WhenLibraryHasNoBooks() throws Exception {
+    void shouldReturn404WhenLibraryHasNoBooks() throws Exception, NoBooksInLibraryException {
+
+        when(bookService.getList()).thenReturn(null);
 
         mockMvc.perform(get("/books"))
-                //.andExpect(jsonPath("$.length()").value(0))
                 .andExpect(status().is4xxClientError())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+
 
     }
 }
