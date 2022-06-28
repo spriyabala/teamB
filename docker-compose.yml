@@ -1,0 +1,12 @@
+version: '1'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: devUser
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: library
