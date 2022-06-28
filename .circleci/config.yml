@@ -29,8 +29,7 @@ jobs:
       - store_artifacts:
           path: build/test-results/test
 
-      - store_artifacts:
-          path: build/reports/jacoco/test/html
+
 
 
 
