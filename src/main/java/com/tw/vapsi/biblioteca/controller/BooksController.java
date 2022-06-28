@@ -26,9 +26,9 @@ public class BooksController {
     public String home(Model model) {
         try {
             model.addAttribute("books", bookService.getList());
-            return "booklist";
+            return "bookList";
         } catch (NoBooksInLibraryException e) {
-            return "nobooks";
+            return "noBooks";
         }
 
     }

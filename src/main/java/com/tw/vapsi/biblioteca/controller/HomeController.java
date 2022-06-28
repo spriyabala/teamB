@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class HomeController {
 
-    @GetMapping("/Biblioteca")
-    public String Biblioteca()
+    @GetMapping("/biblioteca")
+    public String home()
     {
-        return "Index";
+        return "index";
     }
 
 }

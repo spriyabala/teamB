@@ -20,8 +20,8 @@ class HomeControllerTest extends ControllerTestHelper {
 
     @Test
     void shouldShowWelcomeMessage() throws Exception {
-         mockMvc.perform(get("/Biblioteca").contentType("application/json"))
+         mockMvc.perform(get("/biblioteca").contentType("application/json"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("Index"));
+                .andExpect(MockMvcResultMatchers.view().name("index"));
     }
 }

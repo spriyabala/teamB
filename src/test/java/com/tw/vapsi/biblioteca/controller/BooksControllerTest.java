@@ -45,7 +45,7 @@ class BooksControllerTest extends ControllerTestHelper {
 
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("booklist"))
+                .andExpect(MockMvcResultMatchers.view().name("bookList"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("books"));
         // .andExpect(MockMvcResultMatchers.model().attribute("books", Matchers.arrayContaining(list.toArray())));
 
@@ -55,7 +55,7 @@ class BooksControllerTest extends ControllerTestHelper {
 
     }
 
-    @Test
+    /*@Test
     void shouldReturn404WhenLibraryHasNoBooks() throws Exception, NoBooksInLibraryException {
         when(bookService.getList()).thenReturn(null);
 
@@ -64,5 +64,5 @@ class BooksControllerTest extends ControllerTestHelper {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
 
-    }
+    }*/
 }
