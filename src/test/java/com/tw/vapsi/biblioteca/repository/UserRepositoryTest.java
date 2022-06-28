@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 class UserRepositoryTest {
 
-    @Autowired
+   /* @Autowired
     private UserRepository userRepository;
 
 
@@ -49,4 +49,5 @@ class UserRepositoryTest {
         assertFalse(actualUserOptional.isPresent());
 
     }
+    */
 }
