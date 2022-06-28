@@ -2,7 +2,7 @@ version: 2.1
 
 
 workflows:
-  build_deploy:
+  build-deploy:
     jobs:
       - build-deploy
 
