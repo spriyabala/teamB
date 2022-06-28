@@ -10,3 +10,9 @@ services:
       POSTGRES_USER: devUser
       POSTGRES_PASSWORD: password
       POSTGRES_DB: library
+
+  biblioteca:
+      build: .
+      container_name: bibliotecaContainer
+      ports:
+        - 8080:8080

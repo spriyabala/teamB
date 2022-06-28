@@ -30,6 +30,24 @@ jobs:
           path: build/test-results/test
 
 
+  deploy:
+    steps:
+      - checkout
+      - run:
+          name: build and push docker image to heroko
+          command: |
+            set -x
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
+            HEROKU_APP_KEY = ${HEROKU_APP_KEY} heroku container:login
+            HEROKU_APP_KEY = ${HEROKU_APP_KEY} heroku container:push -a bibloteca web
+            HEROKU_APP_KEY = ${HEROKU_APP_KEY} heroku container:release -a bibloteca web
+            
+            
+
+    docker:
+      -
+    machine: true
+
 
 
 
