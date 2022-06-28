@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,22 +21,17 @@ public class BooksController {
 
     @Autowired
     private BookService bookService;
-    @Autowired
-    private BookRepository bookRepository;
 
     @GetMapping
-    public List<Book> books() throws NoBooksInLibraryException {
+    public String home(Model model) {
         try {
-            return bookService.getList();
+            model.addAttribute("books", bookService.getList());
+            return "booklist";
         } catch (NoBooksInLibraryException e) {
-            //
+            return "nobooks";
         }
-        return bookService.getList();
+
     }
 
-    @GetMapping("/booklist")
-    public String home(Model model) {
-        model.addAttribute("books", bookRepository.findAll());
-        return "bookList";
-    }
+
 }
