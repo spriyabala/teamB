@@ -25,11 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = BooksController.class)
 class BooksControllerTest extends ControllerTestHelper {
-<<<<<<< Updated upstream
-   @Autowired
-=======
     @Autowired
->>>>>>> Stashed changes
 
     private MockMvc mockMvc;
     @MockBean
@@ -38,28 +34,22 @@ class BooksControllerTest extends ControllerTestHelper {
     @Test
     @WithMockUser
     void shouldReturnListOfBooks() throws Exception, NoBooksInLibraryException {
-                Book book1 = new Book("The River of Adventures", "Enid Blyton");
-            Book book2 = new Book("Muniya", "NBT Publications");
+        Book book1 = new Book("The River of Adventures", "Enid Blyton");
+        Book book2 = new Book("Muniya", "NBT Publications");
 
         List<Book> list = new ArrayList<Book>();
         list.add(book1);
         list.add(book2);
-                when(bookService.getList()).thenReturn(list);
+        when(bookService.getList()).thenReturn(list);
 
 
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("booklist"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("books"));
-              // .andExpect(MockMvcResultMatchers.model().attribute("books", Matchers.arrayContaining(list.toArray())));
+        // .andExpect(MockMvcResultMatchers.model().attribute("books", Matchers.arrayContaining(list.toArray())));
 
 
-<<<<<<< Updated upstream
-    }
-
-     @Test
-  void shouldReturn404WhenLibraryHasNoBooks() throws Exception, NoBooksInLibraryException {
-=======
 
         verify(bookService, times(1)).getList();
 
@@ -67,7 +57,6 @@ class BooksControllerTest extends ControllerTestHelper {
 
     @Test
     void shouldReturn404WhenLibraryHasNoBooks() throws Exception, NoBooksInLibraryException {
->>>>>>> Stashed changes
         when(bookService.getList()).thenReturn(null);
 
         mockMvc.perform(get("/books"))
@@ -77,4 +66,3 @@ class BooksControllerTest extends ControllerTestHelper {
 
     }
 }
-
