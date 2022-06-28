@@ -24,10 +24,10 @@ public class BibliotecaApplication {
 	/*@Bean
 	public CommandLineRunner setup(BookRepository repository) {
 		return (args) -> {
-			repository.save(new Book("ABC", "DEF"));
-			repository.save(new Book("A1B1C1", "D1E1F!"));
+			repository.save(new Book("The Adventure Of River", "Enid Blyton"));
+			repository.save(new Book("Rusty Runs Away", "Ruskin Bond"));
 
 		};
-*/
-	//}
+
+	}*/
 }
