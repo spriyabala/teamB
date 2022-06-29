@@ -17,7 +17,7 @@ jobs:
           command: |
             set -x
             sudo curl https://cli-assets.heroku.com/install.sh | sh
-            docker login --username=${HEROKU_LOGIN} --password=${HEROKU_API_KEY} registry.heroku.com
+            docker login --username=$HEROKU_LOGIN --password=$HEROKU_API_KEY registry.heroku.com
             HEROKU_APP_KEY=${HEROKU_APP_KEY} heroku container:push -a bibloteca web
             HEROKU_APP_KEY=${HEROKU_APP_KEY} heroku container:release -a bibloteca web
             
