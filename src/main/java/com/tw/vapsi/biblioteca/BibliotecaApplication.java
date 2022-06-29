@@ -21,13 +21,5 @@ public class BibliotecaApplication {
 
 	}
 
-	/*@Bean
-	public CommandLineRunner setup(BookRepository repository) {
-		return (args) -> {
-			repository.save(new Book("ABC", "DEF"));
-			repository.save(new Book("A1B1C1", "D1E1F!"));
 
-		};
-*/
-	//}
 }

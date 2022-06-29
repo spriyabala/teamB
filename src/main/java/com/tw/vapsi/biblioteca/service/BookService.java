@@ -1,10 +1,8 @@
 package com.tw.vapsi.biblioteca.service;
-import com.tw.vapsi.biblioteca.exception.NoBooksInLibraryException;
+
 import com.tw.vapsi.biblioteca.model.Book;
 import com.tw.vapsi.biblioteca.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

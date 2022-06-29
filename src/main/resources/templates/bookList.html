@@ -17,11 +17,11 @@ table, th, td {
 </head>
 <body>
 
-<H1> List of Books</H1>
-<br>
 <td th:text="${errorMessage}"></td>
 
-
+<div  th:if="${books != null}">
+<H1> List of Books</H1>
+<br>
 
 <table>
     <thead>
@@ -40,9 +40,12 @@ table, th, td {
     </tbody>
 
 </table>
+</div>
 
 <p>
-    <a href="/Biblioteca" >Home Page</a>
+    <a href="/" >Home Page</a>
+
+
 
 
 
