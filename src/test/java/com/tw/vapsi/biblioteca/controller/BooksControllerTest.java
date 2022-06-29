@@ -45,9 +45,9 @@ class BooksControllerTest extends ControllerTestHelper {
 
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("bookList"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("books"));
-        // .andExpect(MockMvcResultMatchers.model().attribute("books", Matchers.arrayContaining(list.toArray())));
+                .andExpect(MockMvcResultMatchers.view().name("booklist"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("books"))
+                .andExpect(MockMvcResultMatchers.model().attribute("books", list));
 
 
 
@@ -55,14 +55,21 @@ class BooksControllerTest extends ControllerTestHelper {
 
     }
 
-    /*@Test
-    void shouldReturn404WhenLibraryHasNoBooks() throws Exception, NoBooksInLibraryException {
-        when(bookService.getList()).thenReturn(null);
+    @Test
+    void shouldDisplayErrorMessageWhenLibraryHasNoBooks() throws Exception, NoBooksInLibraryException {
+        List<Book> books = new ArrayList();
+        when(bookService.getList()).thenReturn(books);
 
         mockMvc.perform(get("/books"))
-                .andExpect(status().is4xxClientError())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("booklist"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("errorMessage"))
+                .andExpect(MockMvcResultMatchers.model().attribute("errorMessage", "Sorry , no books to show"));
 
 
-    }*/
+        //.andExpect(MockMvcResultMatchers.model().attribute("books", list));
+        verify(bookService, times(1)).getList();
+
+
+    }
 }
