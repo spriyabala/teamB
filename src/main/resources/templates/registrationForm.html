@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Registration Form </title>
+</head>
+<script language="Javascript">
+var flag=true;
+
+function validate() {
+
+if (document.forms["registerForm"]["userFname"].value=="") {
+document.getElementById("div1").innerHTML="User's First Name cannot be blank";
+flag=false;
+}
+if (document.forms["registerForm"]["userLname"].value=="") {
+document.getElementById("div2").innerHTML="User's Last Name cannot be blank";
+flag=false;
+}
+if (document.forms["registerForm"]["email"].value=="") {
+document.getElementById("div3").innerHTML="User's Email cannot be blank";
+flag=false;
+}
+
+if (document.forms["registerForm"]["password"].value=="") {
+document.getElementById("div4").innerHTML="Password cannot be blank";
+
+flag=false;
+}
+if(flag==false)
+return false;
+else
+return true;
+}
+
+</script>
+<body>
+<h1>Registration Form</h1>
+<form th:action="@{/users}" method="post" name="registerForm">
+
+    <div><label> Enter User's First Name : <input type="text" name="firstName"/>
+        <div id="div1"></div>
+    </label></div>
+    <div><label> Enter User's Last Name : <input type="text" name="lastName"/>
+        <div id="div2"></div>
+    </label>
+    </div>
+        <div><label> Enter User's Email : <input type="text" name="email"/>
+            <div id="div3"></div>
+        </label>
+        </div>
+
+            <div><label> Password: <input type="password" name="password"/>
+        <div id="div4"></div>
+    </label></div>
+    <div><input type="submit" value="Register Me"/></div>
+
+</form>
+</body>
+</html>
