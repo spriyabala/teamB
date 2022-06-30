@@ -31,4 +31,6 @@ public class UserService implements UserDetailsService {
         User user = new User(firstName, lastName, email, encodePassword);
         return userRepository.save(user);
     }
+
+
 }

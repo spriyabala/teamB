@@ -2,12 +2,14 @@ package com.tw.vapsi.biblioteca.controller;
 
 import com.tw.vapsi.biblioteca.model.User;
 import com.tw.vapsi.biblioteca.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+import javax.validation.constraints.NotEmpty;
+
+@Controller
+//@Validated
 @RequestMapping("/users")
 public class UserController {
 
@@ -18,11 +20,17 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestParam String firstName,
+    public String createUser(@RequestParam String firstName,
                            @RequestParam String lastName,
                            @RequestParam String email,
                            @RequestParam String password) {
-        return userService.save(firstName, lastName, email, password);
+        System.out.println(firstName+ lastName +email+ password);
+        return "Hello";
+    }
+
+    @PostMapping("/registration")
+    public String registerUser(){
+        return "registrationForm";
     }
 
 }
