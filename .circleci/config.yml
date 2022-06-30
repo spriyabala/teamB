@@ -2,13 +2,51 @@ version: 2.1
 
 
 workflows:
-  build-deploy:
+  version: 2
+  build_and_test:
     jobs:
-      - build-deploy
+      - build
+#      - test:
+#          requires:
+#            - build
+      - deploy:
+          requires:
+            - build
+
+
+
 
 jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
+      - checkout
+      - run: ./gradlew bootJar
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - build/
+            - .gradle/
+  test:
 
-  build-deploy:
+    docker:
+      - image: circleci/openjdk:11.0.3-jdk-stretch
+
+    steps:
+      - checkout
+
+      - run: ./gradlew test
+
+      - store_test_results:
+          path: build/test-results/test
+      - store_artifacts:
+          path: build/test-results/test
+
+
+
+
+  deploy:
     machine: true
     steps:
       - checkout
