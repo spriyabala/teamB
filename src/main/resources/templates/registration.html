@@ -8,11 +8,11 @@ var flag=true;
 
 function validate() {
 
-if (document.forms["registerForm"]["userFname"].value=="") {
+if (document.forms["registerForm"]["firstName"].value=="") {
 document.getElementById("div1").innerHTML="User's First Name cannot be blank";
 flag=false;
 }
-if (document.forms["registerForm"]["userLname"].value=="") {
+if (document.forms["registerForm"]["lastName"].value=="") {
 document.getElementById("div2").innerHTML="User's Last Name cannot be blank";
 flag=false;
 }

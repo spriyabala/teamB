@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotEmpty;
 
-@Controller
-//@Validated
+@RestController
+@Validated
 @RequestMapping("/users")
 public class UserController {
 
@@ -20,17 +20,12 @@ public class UserController {
     }
 
     @PostMapping
-    public String createUser(@RequestParam String firstName,
+    public User createUser(@RequestParam String firstName,
                            @RequestParam String lastName,
                            @RequestParam String email,
                            @RequestParam String password) {
-        System.out.println(firstName+ lastName +email+ password);
-        return "Hello";
+        return userService.save(firstName,lastName,email,password);
     }
 
-    @PostMapping("/registration")
-    public String registerUser(){
-        return "registrationForm";
-    }
 
 }
