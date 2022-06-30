@@ -50,6 +50,8 @@ jobs:
     machine: true
     steps:
       - checkout
+      - attach_workspace:
+           at: ./
       - run:
           name: build and push docker image to Heroku
           command: |
