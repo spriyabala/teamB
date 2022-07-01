@@ -1,7 +1,9 @@
 package com.tw.vapsi.biblioteca.controller;
 
+import com.tw.vapsi.biblioteca.exception.BookNotAvailableException;
 import com.tw.vapsi.biblioteca.exception.UnAuthorizedUserException;
 
+import com.tw.vapsi.biblioteca.model.Book;
 import com.tw.vapsi.biblioteca.service.CheckedOutBooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,20 +23,27 @@ public class CheckedOutBooksController {
 
 
     @GetMapping("/{id}")
-    public String checkedOutBook(@PathVariable("id") long id,Model model)  {
-        try {
+    public String checkedOutBook(@PathVariable("id") long id,Model model) {
 
+        try {
+            checkedOutBooksService.checkUserAccess();
+            Book book =checkedOutBooksService.bookAvailable(id);
             checkedOutBooksService.saveCheckoutDetails(id);
+            checkedOutBooksService.updateAvailableFlag(book);
             model.addAttribute("message", "Check out successful !!!");
             return "checkoutsuccess";
-        }
-        catch(UnAuthorizedUserException e)
-        {
-            model.addAttribute("errorMessage", "Unauthorized user \n Login to continue");
 
+        } catch (UnAuthorizedUserException e) {
+            model.addAttribute("errorMessage", "Unauthorized user \n Login to continue");
             return "login";
+
+        } catch (BookNotAvailableException e) {
+            model.addAttribute("errorMessage", "Book not available");
+            return "booklist";
         }
 
     }
+
+
 
 }

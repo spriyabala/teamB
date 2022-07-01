@@ -40,14 +40,11 @@ class BooksControllerTest extends ControllerTestHelper {
         list.add(book2);
         when(bookService.getList()).thenReturn(list);
 
-
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("bookList"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("books"))
                 .andExpect(MockMvcResultMatchers.model().attribute("books", list));
-
-
 
         verify(bookService, times(1)).getList();
 

@@ -1,5 +1,6 @@
 package com.tw.vapsi.biblioteca.service;
 
+import com.tw.vapsi.biblioteca.exception.BookNotAvailableException;
 import com.tw.vapsi.biblioteca.exception.UnAuthorizedUserException;
 import com.tw.vapsi.biblioteca.helper.UserServiceHelper;
 import com.tw.vapsi.biblioteca.model.Book;
@@ -20,21 +21,42 @@ public class CheckedOutBooksService {
     private CheckedOutBooksRepository checkedOutBooksRepository;
 
     @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
     private UserDetailsService userDetailsService;
-
-
 
     public CheckedOutBooks saveCheckoutDetails(Long id) throws UnAuthorizedUserException {
         UserServiceHelper userServiceHelper = new UserServiceHelper();
-        CheckedOutBooks checkedOutBooks = null;
-        if(!(userServiceHelper.userRole().contains( new SimpleGrantedAuthority("ROLE_USER"))||
-                userServiceHelper.userRole().contains( new SimpleGrantedAuthority("ROLE_LIBRARIAN"))))
-            throw new UnAuthorizedUserException();
-
-        checkedOutBooks = new CheckedOutBooks(id,userServiceHelper.fetchUserName());
+        CheckedOutBooks checkedOutBooks = new CheckedOutBooks(id,userServiceHelper.fetchUserName());
         checkedOutBooksRepository.save(checkedOutBooks);
         return checkedOutBooks;
 
     }
 
+    public void checkUserAccess() throws UnAuthorizedUserException {
+        UserServiceHelper userServiceHelper = new UserServiceHelper();
+        if(!(userServiceHelper.userRole().contains( new SimpleGrantedAuthority("ROLE_USER"))||
+                userServiceHelper.userRole().contains( new SimpleGrantedAuthority("ROLE_LIBRARIAN"))))
+            throw new UnAuthorizedUserException();
+
+
+    }
+
+    public Book bookAvailable(long id) throws BookNotAvailableException {
+
+        if(bookRepository.findById(id)==null)
+            throw new BookNotAvailableException();
+
+       return bookRepository.findById(id).get();
+
+
+
+    }
+
+
+    public void updateAvailableFlag(Book book) {
+        book.setAvailable(false);
+        bookRepository.save(book);
+    }
 }

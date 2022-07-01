@@ -1,6 +1,7 @@
 package com.tw.vapsi.biblioteca.controller;
 
 import com.tw.vapsi.biblioteca.controller.helper.ControllerTestHelper;
+import com.tw.vapsi.biblioteca.model.Book;
 import com.tw.vapsi.biblioteca.model.CheckedOutBooks;
 import com.tw.vapsi.biblioteca.service.CheckedOutBooksService;
 import org.junit.jupiter.api.Test;
@@ -41,9 +42,7 @@ class CheckedOutBooksControllerTest extends ControllerTestHelper {
 
         verify(checkedOutBooksService, times(1)).saveCheckoutDetails(2L);
 
-
-
-
-
     }
+
+
 }
