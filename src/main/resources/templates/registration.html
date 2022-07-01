@@ -2,7 +2,54 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Registration Form </title>
-</head>
+<style>
+
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  background-color: #ABB5D4;
+}
+
+
+
+#login-form {
+  align-self: flex-start;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+.login-form-field::placeholder {
+  color: #3a3a3a;
+}
+
+.login-form-field {
+  border: none;
+  border-bottom: 1px solid #3a3a3a;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  outline: none;
+  padding: 0px 0px 5px 5px;
+}
+
+#login-form-submit {
+  width: 100%;
+  padding: 7px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  background-color: #91A4DA;
+  cursor: pointer;
+  outline: none;
+}
+</style>
+
 <script language="Javascript">
 
 function validate() {
@@ -32,26 +79,28 @@ return true;
 }
 
 </script>
-<body>
-<h1>Registration Form</h1>
-<form th:action="@{/users}" method="post" name="registerForm">
+</head>
 
-    <div><label> Enter User's First Name : <input type="text" name="firstName"/>
+<body>
+<h1 id ="login-header">Registration Form</h1>
+<form th:action="@{/users}" method="post" name="registerForm" id="login-form">
+
+    <div><label> Enter User's First Name : <input type="text" name="firstName" class="login-form-field"/>
         <div id="div1"></div>
     </label></div>
-    <div><label> Enter User's Last Name : <input type="text" name="lastName"/>
+    <div><label> Enter User's Last Name : <input type="text" name="lastName" class="login-form-field"/>
         <div id="div2"></div>
     </label>
     </div>
-        <div><label> Enter User's Email : <input type="text" name="email"/>
+        <div><label> Enter User's Email : <input type="text" name="email" class="login-form-field"/>
             <div id="div3"></div>
         </label>
         </div>
 
-            <div><label> Password: <input type="password" name="password"/>
+            <div><label> Password: <input type="password" name="password" class="login-form-field"/>
         <div id="div4"></div>
     </label></div>
-    <div><input type="submit" value="Register Me"  onclick="return validate()"/></div>
+    <div><input type="submit" value="Register Me"  id="login-form-submit" onclick="return validate()"/></div>
 
 </form>
 </body>
