@@ -4,10 +4,9 @@
     <title>Registration Form </title>
 </head>
 <script language="Javascript">
-var flag=true;
 
 function validate() {
-
+var flag=true;
 if (document.forms["registerForm"]["firstName"].value=="") {
 document.getElementById("div1").innerHTML="User's First Name cannot be blank";
 flag=false;
@@ -52,7 +51,7 @@ return true;
             <div><label> Password: <input type="password" name="password"/>
         <div id="div4"></div>
     </label></div>
-    <div><input type="submit" value="Register Me"/></div>
+    <div><input type="submit" value="Register Me"  onclick="return validate()"/></div>
 
 </form>
 </body>

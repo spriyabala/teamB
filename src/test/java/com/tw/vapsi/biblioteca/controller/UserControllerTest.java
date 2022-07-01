@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -44,11 +45,8 @@ class UserControllerTest extends ControllerTestHelper {
                         .param("password", password)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.firstName").value(firstName))
-                .andExpect(jsonPath("$.lastName").value(lastName))
-                .andExpect(jsonPath("$.email").value(email));
+                .andExpect(MockMvcResultMatchers.view().name("index"));
+
     }
 
     @Test
@@ -65,7 +63,6 @@ class UserControllerTest extends ControllerTestHelper {
                 );
         verify(userService, never()).save(anyString(), anyString(), anyString(), anyString());
     }
-
 
     @Test
     void shouldNotCreateUserWhenLastNameIsMissing() throws Exception {

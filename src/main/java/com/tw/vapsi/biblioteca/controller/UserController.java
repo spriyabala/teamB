@@ -6,9 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
-@RestController
+@Controller
 @Validated
 @RequestMapping("/users")
 public class UserController {
@@ -20,11 +23,20 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestParam String firstName,
-                           @RequestParam String lastName,
-                           @RequestParam String email,
-                           @RequestParam String password) {
-        return userService.save(firstName,lastName,email,password);
+    public String createUser(@RequestParam @Valid String firstName,
+                             @RequestParam @Valid String lastName,
+                             @RequestParam @Valid String email,
+                             @RequestParam @Valid String password,
+                             HttpServletResponse response) {
+       if(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() ){
+                    response.setStatus(400);
+                  //  return "Incomplete Input";
+       }
+       else{
+           userService.save(firstName,lastName,email,password);
+
+       }
+         return "index";
     }
 
 
