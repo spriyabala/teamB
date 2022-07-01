@@ -56,8 +56,6 @@ $(document).ready(function() {
         <tbody>
         <tr th:each="book : ${books}">
 
-<<<<<<< Updated upstream
-=======
             <td th:text="${book.name}"></td>
             <td th:text="${book.author}"></td>
             <td><a th:href="@{books/checkout/{id}(id=${book.id})}">Checkout</a></td>
@@ -72,7 +70,6 @@ $(document).ready(function() {
 
 <p>
     <a href="/" >Home Page</a>
->>>>>>> Stashed changes
 </p>
 </body>
 </html>
