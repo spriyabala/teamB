@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/checkout")
 public class CheckedOutBooksController {
@@ -41,7 +43,13 @@ public class CheckedOutBooksController {
             model.addAttribute("errorMessage", "Book not available");
             return "booklist";
         }
-
+    }
+    @GetMapping
+    public String viewCheckOutBooks(Model model)
+    {
+        List<Book> books =checkedOutBooksService.checkedOutBookDetails();
+        model.addAttribute("books", books);
+        return "checkOutBooks";
     }
 
 

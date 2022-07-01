@@ -32,14 +32,14 @@ $(document).ready(function() {
 </script>
 
     <meta charset="UTF-8">
-    <title>List of Books</title>
+    <title>Checked out books</title>
 </head>
 <body>
 
-<td th:text="${errorMessage}"></td>
 
-<div  th:if="${books != null}">
-    <H1> List of Books</H1>
+
+
+    <H1> Books checked out by you</H1>
     <br>
 
 
@@ -49,26 +49,15 @@ $(document).ready(function() {
 
             <th >Book Name </th>
             <th >Author </th>
-            <th class="no-sort"></th>
+
         </tr>
         </thead>
 
         <tbody>
         <tr th:each="book : ${books}">
 
-
             <td th:text="${book.name}"></td>
             <td th:text="${book.author}"></td>
-           <td>
-               <span th:if="${book.isAvailable}">
-            <a th:href="@{/checkout/{id}(id=${book.id})}">Checkout</a>
-               </span>
-               <span th:if="${!book.isAvailable}">Not Available </span>
-
-           </td>
-
-
-
 
         </tr>
         </tbody>
@@ -79,6 +68,7 @@ $(document).ready(function() {
 
 <p>
     <a href="/" >Home Page</a>
+    <a href="/books" >View Books</a>
 
 </p>
 </body>
