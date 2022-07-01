@@ -19,7 +19,7 @@ class CheckedOutBooksServiceTest {
     @Autowired
     private CheckedOutBooksService checkedOutBooksService;
 
-    @Autowired
+    @MockBean
     private CheckedOutBooksRepository checkedOutBooksRepository;
 
 
@@ -30,7 +30,6 @@ class CheckedOutBooksServiceTest {
         checkedOutBooks.setId(2L);
         CheckedOutBooks booksToBeCheckedOut = new CheckedOutBooks(2L,"vaishnnavims23@gmail.com");
         booksToBeCheckedOut.setId(2L);
-
         when(checkedOutBooksRepository.save(booksToBeCheckedOut)).thenReturn(checkedOutBooks);
 
         assertEquals(checkedOutBooks,checkedOutBooksRepository.save(booksToBeCheckedOut));

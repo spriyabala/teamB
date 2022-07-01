@@ -18,15 +18,12 @@ public class CheckedOutBooksController {
     private CheckedOutBooksService checkedOutBooksService;
 
 
-    @GetMapping
-    public void check()
-    {
 
-    }
 
     @GetMapping("/{id}")
     public String checkedOutBook(@PathVariable("id") long id,Model model)  {
         try {
+
             checkedOutBooksService.saveCheckoutDetails(id);
             model.addAttribute("message", "Check out successful !!!");
             return "checkoutsuccess";

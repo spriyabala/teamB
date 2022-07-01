@@ -27,8 +27,6 @@ public class CheckedOutBooksService {
     public CheckedOutBooks saveCheckoutDetails(Long id) throws UnAuthorizedUserException {
         UserServiceHelper userServiceHelper = new UserServiceHelper();
         CheckedOutBooks checkedOutBooks = null;
-        System.out.println(userServiceHelper.fetchUserName());
-        System.out.println(userServiceHelper.userRole());
         if(!(userServiceHelper.userRole().contains( new SimpleGrantedAuthority("ROLE_USER"))||
                 userServiceHelper.userRole().contains( new SimpleGrantedAuthority("ROLE_LIBRARIAN"))))
             throw new UnAuthorizedUserException();
