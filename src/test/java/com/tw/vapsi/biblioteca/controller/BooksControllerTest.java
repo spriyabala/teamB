@@ -2,15 +2,13 @@ package com.tw.vapsi.biblioteca.controller;
 
 
 import com.tw.vapsi.biblioteca.controller.helper.ControllerTestHelper;
-import com.tw.vapsi.biblioteca.exception.NoBooksInLibraryException;
+import com.tw.vapsi.biblioteca.exception.UnAuthorizedUserException;
 import com.tw.vapsi.biblioteca.model.Book;
 import com.tw.vapsi.biblioteca.service.BookService;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -33,7 +31,7 @@ class BooksControllerTest extends ControllerTestHelper {
 
     @Test
     @WithMockUser
-    void shouldReturnListOfBooks() throws Exception, NoBooksInLibraryException {
+    void shouldReturnListOfBooks() throws Exception {
         Book book1 = new Book("The River of Adventures", "Enid Blyton");
         Book book2 = new Book("Muniya", "NBT Publications");
 
@@ -56,7 +54,7 @@ class BooksControllerTest extends ControllerTestHelper {
     }
 
     @Test
-    void shouldDisplayErrorMessageWhenLibraryHasNoBooks() throws Exception, NoBooksInLibraryException {
+    void shouldDisplayErrorMessageWhenLibraryHasNoBooks() throws Exception, UnAuthorizedUserException {
         List<Book> books = new ArrayList<Book>();
         when(bookService.getList()).thenReturn(books);
 

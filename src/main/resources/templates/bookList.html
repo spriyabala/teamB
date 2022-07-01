@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
 
 <head>
     <style>
@@ -11,7 +14,23 @@ table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
 }
+
 </style>
+
+    <script>
+$(document).ready(function() {
+  $('#example').DataTable({
+
+    "ordering": true,
+    columnDefs: [{
+      orderable: false,
+      targets: "no-sort"
+    }]
+
+  });
+});
+</script>
+
     <meta charset="UTF-8">
     <title>List of Books</title>
 </head>
@@ -20,34 +39,40 @@ table, th, td {
 <td th:text="${errorMessage}"></td>
 
 <div  th:if="${books != null}">
-<H1> List of Books</H1>
-<br>
+    <H1> List of Books</H1>
+    <br>
 
-<table>
-    <thead>
-    <tr>
-        <th>Book Name</th>
-        <th >Author</th>
-    </tr>
-    </thead>
 
-    <tbody>
-    <tr th:each="book : ${books}">
+    <table id ="example" class ="display">
+        <thead>
+        <tr>
 
-        <td th:text="${book.name}"></td>
-        <td th:text="${book.author}"></td>
-    </tr>
-    </tbody>
+            <th >Book Name </th>
+            <th >Author </th>
+            <th class="no-sort"></th>
+        </tr>
+        </thead>
 
-</table>
+        <tbody>
+        <tr th:each="book : ${books}">
+
+<<<<<<< Updated upstream
+=======
+            <td th:text="${book.name}"></td>
+            <td th:text="${book.author}"></td>
+            <td><a th:href="@{books/checkout/{id}(id=${book.id})}">Checkout</a></td>
+
+
+        </tr>
+        </tbody>
+
+    </table>
 </div>
+
 
 <p>
     <a href="/" >Home Page</a>
-
-
-
-
+>>>>>>> Stashed changes
 </p>
 </body>
 </html>

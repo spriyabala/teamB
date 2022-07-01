@@ -1,8 +1,6 @@
 package com.tw.vapsi.biblioteca.model;
-
 import javax.persistence.*;
 import java.util.Objects;
-
 @Entity
 @Table(name = "books")
 public class Book {
@@ -10,20 +8,16 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-
     private String author;
-
+    private String userName;
     public Book()
     {
-
     }
-
     public Book(String name, String author) {
         //this.id = id;
         this.author = author;
         this.name = name;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,33 +25,32 @@ public class Book {
         Book book = (Book) o;
         return id == book.id && Objects.equals(name, book.name) && Objects.equals(author, book.author);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(id, name, author);
     }
-
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
-
     public String getAuthor() {
         return author;
     }
-
     public void setAuthor(String author) {
         this.author = author;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
+    }
+    public String getUserName() {
+        return userName;
+    }
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
