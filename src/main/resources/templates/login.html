@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Spring Security Example </title>
+    <title>Biblioteca </title>
 </head>
 <body>
+
+<div class="container">
+    <div class="hero-unit">
+        <h1 style="background-color:DodgerBlue;color:White;" align="center" >Biblioteca</h1>
+        <p style="font-color:red;font-family:courier;">
+            Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!
+            Get started quickly by signing up.
+        </p>
+    </div>
+</div>
 <span style="color: red" th:text="${errorMessage}"></span>
 <div th:if="${param.error}">
     Invalid username and password.
@@ -11,10 +21,35 @@
 <div th:if="${param.logout}">
     You have been logged out.
 </div>
+<style>
+       .login-form-field {
+  border: none;
+  border-bottom: 1px solid #3a3a3a;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  outline: none;
+  padding: 0px 0px 5px 5px;
+}
+        .login-form-submit {
+        width: 100%;
+        padding: 7px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        background-color: #91A4DA;
+        cursor: pointer;
+        outline: none;
+        }
+</style>
 <form th:action="@{/login}" method="post">
     <div><label> User Name : <input type="text" name="username"/> </label></div>
+    <br>
     <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+    <br>
+    <div><input type="submit" value="Sign In" /></div>
+    <br>
+    <P>  New User Sign Up Here!!  </P>
     <div><input type="submit" name="signup" value="Sign Up" th:formaction="@{/users/registration}"/></div>
 
 </form>

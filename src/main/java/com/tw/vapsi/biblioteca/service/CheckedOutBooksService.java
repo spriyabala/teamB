@@ -41,8 +41,6 @@ public class CheckedOutBooksService {
         if (!(userServiceHelper.userRole().contains(new SimpleGrantedAuthority("ROLE_USER")) ||
                 userServiceHelper.userRole().contains(new SimpleGrantedAuthority("ROLE_LIBRARIAN"))))
             throw new UnAuthorizedUserException();
-
-
     }
 
     public Book bookAvailable(long id) throws BookNotAvailableException {

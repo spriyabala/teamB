@@ -1,21 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org" >
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
 
-<head>
-    <style>
-
-th, td {
-  padding: 15px;
-}
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-
-</style>
+<head th:replace = "~{fragments/header}" >  <!--th:replace = "~{fragments/header :: menu (type='remove')}">
+<div th:replace = "~{fragments/header}" ></div> -->
 
     <script>
 $(document).ready(function() {
@@ -35,7 +24,17 @@ $(document).ready(function() {
     <title>List of Books</title>
 </head>
 <body>
+<style>
 
+th, td {
+  padding: 15px;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+</style>
 <td th:text="${errorMessage}"></td>
 
 <div  th:if="${books != null}">
@@ -72,10 +71,8 @@ $(document).ready(function() {
     </table>
 </div>
 
-
 <p>
     <a href="/" >Home Page</a>
-
 </p>
 </body>
 </html>

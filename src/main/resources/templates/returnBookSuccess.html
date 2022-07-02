@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
-<head>
+<head th:replace = "~{fragments/header}" >
     <meta charset="UTF-8">
     <title>Returned Book successful</title>
 </head>
@@ -9,9 +9,9 @@
 <td th:text="${message}"></td>
 <br>
 <br>
-<a href="/books">View Book List</a>
+<!-- <a href="/books">View Book List</a>
 <p>
     <a href="/" >Home Page</a>
-</p>
+</p> -->
 </body>
 </html>

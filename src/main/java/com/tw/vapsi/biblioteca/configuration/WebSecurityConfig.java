@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -28,15 +29,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                //.antMatchers("/books").authenticated()
+                .antMatchers("/books").authenticated()
+                .antMatchers("/mainMenu").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/mainMenu")
+                    .failureUrl("/login?error")
+                    .permitAll()
+                    .and()
                 .logout()
-                .permitAll();
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/index?logout")
+                    .deleteCookies("my-remember-me-cookie")
+                    .permitAll()
+                    .and();
+
         http.csrf().disable().headers().frameOptions().disable();
     }
 

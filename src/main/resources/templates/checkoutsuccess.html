@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
-<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+<head th:replace = "~{fragments/header}">
+
     <meta charset="UTF-8">
     <title>Check out successful</title>
 </head>
@@ -9,11 +14,12 @@
 <td th:text="${message}"></td>
 <br>
 <br>
+<!--
 <span>Click </span>
 <a href="/checkout">here</a>
 <span>to view the checked out books by you .</span>
 <p>
     <a href="/" >Home Page</a>
-</p>
+</p> -->
 </body>
 </html>

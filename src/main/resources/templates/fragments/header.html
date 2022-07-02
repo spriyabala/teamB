@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Library</title>
 </head>
 <body>
-$END$
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" th:fragment="menu">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+  <div class="collapse navbar-collapse" id="navbars">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item" th:class="${activePage == 'mainMenu'} ? 'nav-item active' : 'nav-item'">
+            <a class="nav-link" th:href="@{/mainMenu}">Home<span class="sr-only">(current)</span></a>
+        </li>
+     <li class="nav-item" th:class="${activePage == 'bookList'} ? 'nav-item active' : 'nav-item'">
+        <a class="nav-link" th:href="@{/books}">View/Checkout Books<span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item" th:class="${activePage == 'checkout'} ? 'nav-item active' : 'nav-item'">
+        <a class="nav-link" th:href="@{/checkout}">Return Book</a>
+      </li>
+      <li class="nav-item" th:class="${activePage == 'index'} ? 'nav-item active' : 'nav-item'">
+        <a class="nav-link" th:href="@{/biblioteca}">Logout</a>
+      </li>
+    </ul>
+  </div>
+
+</nav>
+<div th:fragment="header" >
+    <h1 style="background-color:DodgerBlue;color:White;" align="center" >Biblioteca</h1>
+</div>
 </body>
 </html>

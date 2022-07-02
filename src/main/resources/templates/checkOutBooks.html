@@ -4,18 +4,7 @@
 <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
 
-<head>
-    <style>
-
-th, td {
-  padding: 15px;
-}
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-
-</style>
+<head th:replace = "~{fragments/header}" >
 
     <script>
 $(document).ready(function() {
@@ -35,9 +24,16 @@ $(document).ready(function() {
     <title>Checked out books</title>
 </head>
 <body>
+<style>
 
-
-
+th, td {
+  padding: 15px;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
 
     <H1> Books checked out by you</H1>
     <br>
@@ -67,7 +63,6 @@ $(document).ready(function() {
 
             </td>
 
-
         </tr>
         </tbody>
 
@@ -76,9 +71,9 @@ $(document).ready(function() {
 
 
 <p>
-    <a href="/" >Home Page</a>
+ <!--   <a href="/" >Home Page</a>
     <a href="/books" >View Books</a>
-
+-->
 </p>
 </body>
 </html>

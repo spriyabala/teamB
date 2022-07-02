@@ -35,8 +35,6 @@ public class UserServiceHelper {
         }
         return userRole;
 
-
-
     }
 
 }
