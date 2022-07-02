@@ -25,8 +25,6 @@ class CheckedOutBooksControllerTest extends ControllerTestHelper {
     @MockBean
     CheckedOutBooksService checkedOutBooksService;
 
-
-
     @Test
     void shouldSaveCheckedOutDetails() throws Exception {
         CheckedOutBooks checkedOutBooks = new CheckedOutBooks(2,"abc@gmail.com");

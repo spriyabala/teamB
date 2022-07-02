@@ -49,6 +49,7 @@ $(document).ready(function() {
 
             <th >Book Name </th>
             <th >Author </th>
+            <th class="no-sort"></th>
 
         </tr>
         </thead>
@@ -58,6 +59,14 @@ $(document).ready(function() {
 
             <td th:text="${book.name}"></td>
             <td th:text="${book.author}"></td>
+            <td>
+               <span th:if="${!book.isAvailable}">
+            <a th:href="@{/return/{id}(id=${book.id})}">Return</a>
+               </span>
+                <span th:if="${book.isAvailable}">Not Checked Out </span>
+
+            </td>
+
 
         </tr>
         </tbody>

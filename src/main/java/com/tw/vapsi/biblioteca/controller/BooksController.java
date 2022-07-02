@@ -12,9 +12,9 @@ import java.util.List;
 public class BooksController {
     @Autowired
     private BookService bookService;
+
     @PostConstruct
-    public void loadStaticData()
-    {
+    public void loadStaticData() {
         bookService.saveStaticData(new Book("The Adventure Of River", "Enid Blyton"));
         bookService.saveStaticData(new Book("Rusty Runs Away", "Ruskin Bond"));
         bookService.saveStaticData(new Book("Who Will Cry When you Die?", "Robin Sharma"));
@@ -26,16 +26,16 @@ public class BooksController {
         bookService.saveStaticData(new Book("In a Dark, Dark Wood", "Ruth Ware"));
         bookService.saveStaticData(new Book("Me Before You", "Jojo Moyes"));
     }
+
     @GetMapping
     public String booksList(Model model) {
 
-        List<Book> books =bookService.getList();
-        if(!books.isEmpty())
+        List<Book> books = bookService.getList();
+        if (!books.isEmpty())
             model.addAttribute("books", books);
         else
             model.addAttribute("errorMessage", "Sorry, no books yet!");
         return "bookList";
     }
-
 
 }

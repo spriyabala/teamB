@@ -2,51 +2,46 @@ package com.tw.vapsi.biblioteca.controller;
 
 import com.tw.vapsi.biblioteca.exception.BookNotAvailableException;
 import com.tw.vapsi.biblioteca.exception.UnAuthorizedUserException;
-
 import com.tw.vapsi.biblioteca.model.Book;
+import com.tw.vapsi.biblioteca.model.CheckedOutBooks;
 import com.tw.vapsi.biblioteca.service.CheckedOutBooksService;
+import com.tw.vapsi.biblioteca.service.ReturnBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
 @Controller
-@RequestMapping("/checkout")
-public class CheckedOutBooksController {
+@RequestMapping("/return")
+public class ReturnBooksController {
+    @Autowired
+    private ReturnBookService returnBookService;
     @Autowired
     private CheckedOutBooksService checkedOutBooksService;
 
     @GetMapping("/{id}")
-    public String checkedOutBook(@PathVariable("id") long id,Model model) {
+    public String returnBook(@PathVariable("id") long id, Model model) {
 
         try {
-            checkedOutBooksService.checkUserAccess();
+            System.out.println("I AM IN RETURN");
+            returnBookService.checkUserAccess();
             Book book =checkedOutBooksService.bookAvailable(id);
-            checkedOutBooksService.saveCheckoutDetails(id);
-            checkedOutBooksService.updateAvailableFlag(book);
-            model.addAttribute("message", "Check out successful !!!");
-            return "checkoutsuccess";
+            returnBookService.removeACheckedOutBook(id);
+            returnBookService.updateAvailableFlag(book);
+            model.addAttribute("message", "Returned Book successful !!!");
+            return "returnBookSuccess";
 
         } catch (UnAuthorizedUserException e) {
             model.addAttribute("errorMessage", "Unauthorized user \n Login to continue");
             return "login";
 
         } catch (BookNotAvailableException e) {
-            model.addAttribute("errorMessage", "Book not available");
-            return "booklist";
+            model.addAttribute("errorMessage", "Book not Checked Out");
+            return "bookList";
         }
-    }
-    @GetMapping
-    public String viewCheckOutBooks(Model model)
-    {
-        List<Book> books =checkedOutBooksService.checkedOutBookDetails();
-        model.addAttribute("books", books);
-        return "checkOutBooks";
+
     }
 
 

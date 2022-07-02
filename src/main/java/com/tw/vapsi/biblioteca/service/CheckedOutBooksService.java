@@ -19,28 +19,27 @@ import java.util.Optional;
 public class CheckedOutBooksService {
 
     @Autowired
-     CheckedOutBooksRepository checkedOutBooksRepository;
+    CheckedOutBooksRepository checkedOutBooksRepository;
 
     @Autowired
-     BookRepository bookRepository;
+    BookRepository bookRepository;
 
     @Autowired
-     UserDetailsService userDetailsService;
+    UserDetailsService userDetailsService;
 
 
-
-    public CheckedOutBooks saveCheckoutDetails(Long id)  {
-       UserServiceHelper userServiceHelper = new UserServiceHelper();
-        CheckedOutBooks checkedOutBooks = new CheckedOutBooks(id,userServiceHelper.fetchUserName());
+    public CheckedOutBooks saveCheckoutDetails(Long id) {
+        UserServiceHelper userServiceHelper = new UserServiceHelper();
+        CheckedOutBooks checkedOutBooks = new CheckedOutBooks(id, userServiceHelper.fetchUserName());
         checkedOutBooksRepository.save(checkedOutBooks);
         return checkedOutBooks;
 
     }
 
     public void checkUserAccess() throws UnAuthorizedUserException {
-       UserServiceHelper userServiceHelper = new UserServiceHelper();
-        if(!(userServiceHelper.userRole().contains( new SimpleGrantedAuthority("ROLE_USER"))||
-                userServiceHelper.userRole().contains( new SimpleGrantedAuthority("ROLE_LIBRARIAN"))))
+        UserServiceHelper userServiceHelper = new UserServiceHelper();
+        if (!(userServiceHelper.userRole().contains(new SimpleGrantedAuthority("ROLE_USER")) ||
+                userServiceHelper.userRole().contains(new SimpleGrantedAuthority("ROLE_LIBRARIAN"))))
             throw new UnAuthorizedUserException();
 
 
@@ -48,21 +47,25 @@ public class CheckedOutBooksService {
 
     public Book bookAvailable(long id) throws BookNotAvailableException {
 
-        Optional<Book> book =bookRepository.findById(id);
-        if(!book.isPresent())
+        Optional<Book> book = bookRepository.findById(id);
+        if (!book.isPresent())
             throw new BookNotAvailableException();
         return book.get();
 
     }
 
     public void updateAvailableFlag(Book book) {
+
         book.setAvailable(false);
         bookRepository.save(book);
     }
 
     public List<Book> checkedOutBookDetails() {
-       UserServiceHelper userServiceHelper = new UserServiceHelper();
+        UserServiceHelper userServiceHelper = new UserServiceHelper();
         return checkedOutBooksRepository.findCheckedOutBook
                 (userServiceHelper.fetchUserName());
     }
-}
+        public List<CheckedOutBooks> getCheckOutBookList() {
+            return checkedOutBooksRepository.findAll();
+        }
+    }

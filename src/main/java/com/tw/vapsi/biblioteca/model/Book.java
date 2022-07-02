@@ -25,7 +25,6 @@ public class Book {
     {
     }
     public Book(String name, String author) {
-        //this.id = id;
         this.author = author;
         this.name = name;
     }
