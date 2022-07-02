@@ -13,55 +13,55 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class ReturnBookService {
 
-        @Autowired
-        private CheckedOutBooksRepository checkedOutBooksRepository;
+    @Autowired
+    private CheckedOutBooksRepository checkedOutBooksRepository;
 
-        @Autowired
-        private BookRepository bookRepository;
+    @Autowired
+    private BookRepository bookRepository;
 
-        @Autowired
-        private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-        public CheckedOutBooks removeACheckedOutBook(Long id) throws UnAuthorizedUserException {
-            UserServiceHelper userServiceHelper = new UserServiceHelper();
-            CheckedOutBooks checkedOutBooks = new CheckedOutBooks(id,userServiceHelper.fetchUserName());
-            checkedOutBooksRepository.delete(checkedOutBooks);
-            return checkedOutBooks;
+    public CheckedOutBooks removeACheckedOutBook(Long id) throws UnAuthorizedUserException {
+        UserServiceHelper userServiceHelper = new UserServiceHelper();
+        CheckedOutBooks checkedOutBooks = new CheckedOutBooks(id, userServiceHelper.fetchUserName());
+        checkedOutBooksRepository.deleteCheckedOutBookByBookId(id);
+        return checkedOutBooks;
 
-        }
-
-        public void checkUserAccess() throws UnAuthorizedUserException {
-            UserServiceHelper userServiceHelper = new UserServiceHelper();
-            if(!(userServiceHelper.userRole().contains( new SimpleGrantedAuthority("ROLE_USER"))||
-                    userServiceHelper.userRole().contains( new SimpleGrantedAuthority("ROLE_LIBRARIAN"))))
-                throw new UnAuthorizedUserException();
-
-
-        }
-
-        public CheckedOutBooks bookPresentInCheckedOutBooksList(long id) throws BookNotAvailableException {
-
-            if(checkedOutBooksRepository.findById(id)==null)
-                throw new BookNotAvailableException();
-
-            return checkedOutBooksRepository.findById(id).get();
-
-
-
-        }
-
-
-        public void updateAvailableFlag(Book book) {
-
-            book.setAvailable(true);
-            bookRepository.save(book);
-        }
-
-        public List<CheckedOutBooks> getCheckOutBookList() {
-            return checkedOutBooksRepository.findAll();
-        }
     }
+
+    public void checkUserAccess() throws UnAuthorizedUserException {
+        UserServiceHelper userServiceHelper = new UserServiceHelper();
+        if (!(userServiceHelper.userRole().contains(new SimpleGrantedAuthority("ROLE_USER")) ||
+                userServiceHelper.userRole().contains(new SimpleGrantedAuthority("ROLE_LIBRARIAN"))))
+            throw new UnAuthorizedUserException();
+
+
+    }
+
+    public CheckedOutBooks bookPresentInCheckedOutBooksList(long id) throws BookNotAvailableException {
+
+        if (checkedOutBooksRepository.findById(id) == null)
+            throw new BookNotAvailableException();
+
+        return checkedOutBooksRepository.findById(id).get();
+
+
+    }
+
+
+    public void updateAvailableFlag(Book book) {
+
+        book.setAvailable(true);
+        bookRepository.save(book);
+    }
+
+    public List<CheckedOutBooks> getCheckOutBookList() {
+        return checkedOutBooksRepository.findAll();
+    }
+}
 
