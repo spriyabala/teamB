@@ -12,7 +12,6 @@ workflows:
       - deploy:
           requires:
             - build
-            -
 jobs:
   build:
     docker:
