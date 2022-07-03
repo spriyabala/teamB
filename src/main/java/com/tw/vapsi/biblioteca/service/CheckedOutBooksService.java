@@ -24,15 +24,12 @@ public class CheckedOutBooksService {
     @Autowired
     BookRepository bookRepository;
 
-    @Autowired
-    UserDetailsService userDetailsService;
-
 
     public CheckedOutBooks saveCheckoutDetails(Long id) {
         UserServiceHelper userServiceHelper = new UserServiceHelper();
         CheckedOutBooks checkedOutBooks = new CheckedOutBooks(id, userServiceHelper.fetchUserName());
-        checkedOutBooksRepository.save(checkedOutBooks);
-        return checkedOutBooks;
+        return checkedOutBooksRepository.save(checkedOutBooks);
+       // return checkedOutBooks;
 
     }
 
@@ -44,7 +41,6 @@ public class CheckedOutBooksService {
     }
 
     public Book bookAvailable(long id) throws BookNotAvailableException {
-
         Optional<Book> book = bookRepository.findById(id);
         if (!book.isPresent())
             throw new BookNotAvailableException();
@@ -53,7 +49,6 @@ public class CheckedOutBooksService {
     }
 
     public void updateAvailableFlag(Book book) {
-
         book.setAvailable(false);
         bookRepository.save(book);
     }
@@ -63,7 +58,5 @@ public class CheckedOutBooksService {
         return checkedOutBooksRepository.findCheckedOutBook
                 (userServiceHelper.fetchUserName());
     }
-        public List<CheckedOutBooks> getCheckOutBookList() {
-            return checkedOutBooksRepository.findAll();
-        }
+
     }

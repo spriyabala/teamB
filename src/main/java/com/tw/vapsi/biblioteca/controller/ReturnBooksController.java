@@ -1,9 +1,9 @@
 package com.tw.vapsi.biblioteca.controller;
 
 import com.tw.vapsi.biblioteca.exception.BookNotAvailableException;
+import com.tw.vapsi.biblioteca.exception.BookNotReturnedException;
 import com.tw.vapsi.biblioteca.exception.UnAuthorizedUserException;
 import com.tw.vapsi.biblioteca.model.Book;
-import com.tw.vapsi.biblioteca.model.CheckedOutBooks;
 import com.tw.vapsi.biblioteca.service.CheckedOutBooksService;
 import com.tw.vapsi.biblioteca.service.ReturnBookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,6 @@ public class ReturnBooksController {
     public String returnBook(@PathVariable("id") long id, Model model) {
 
         try {
-//            System.out.println("I AM IN RETURN");
             returnBookService.checkUserAccess();
             Book book =checkedOutBooksService.bookAvailable(id);
             returnBookService.removeACheckedOutBook(id);
@@ -39,7 +38,10 @@ public class ReturnBooksController {
 
         } catch (BookNotAvailableException e) {
             model.addAttribute("errorMessage", "Book not Checked Out");
-            return "bookList";
+            return "booksInLibrary";
+        } catch (BookNotReturnedException e) {
+            model.addAttribute("errorMessage", "Unable to return book");
+            return "booksInLibrary";
         }
 
     }

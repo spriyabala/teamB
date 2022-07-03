@@ -42,5 +42,21 @@ class CheckedOutBooksControllerTest extends ControllerTestHelper {
 
     }
 
+    @Test
+    void shouldReturnTrueWhenBookIsAvailableForCheckOut() throws Exception {
+        Book book1 = new Book("The River of Adventures", "Enid Blyton");
+        Book book2 = new Book("The River of Adventures", "Enid Blyton");
+        book1.setId(2);
+        when(checkedOutBooksService.bookAvailable(2L)).thenReturn(book2);
+
+        mockMvc.perform(get("/checkout/2"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("checkoutsuccess"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("message"))
+                .andExpect(MockMvcResultMatchers.model().attribute("message", "Check out successful !!!"));
+
+        verify(checkedOutBooksService, times(1)).bookAvailable(2L);
+
+    }
 
 }

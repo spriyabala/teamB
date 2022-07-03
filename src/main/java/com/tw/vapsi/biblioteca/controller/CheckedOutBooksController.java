@@ -21,6 +21,8 @@ public class CheckedOutBooksController {
     @Autowired
     private CheckedOutBooksService checkedOutBooksService;
 
+
+
     @GetMapping("/{id}")
     public String checkedOutBook(@PathVariable("id") long id,Model model) {
 
@@ -38,15 +40,22 @@ public class CheckedOutBooksController {
 
         } catch (BookNotAvailableException e) {
             model.addAttribute("errorMessage", "Book not available");
-            return "booklist";
+            return "booksInLibrary";
         }
     }
     @GetMapping
-    public String viewCheckOutBooks(Model model)
-    {
-        List<Book> books =checkedOutBooksService.checkedOutBookDetails();
-        model.addAttribute("books", books);
-        return "checkOutBooks";
+    public String viewCheckOutBooks(Model model) {
+        try {
+            checkedOutBooksService.checkUserAccess();
+            List<Book> books = checkedOutBooksService.checkedOutBookDetails();
+            model.addAttribute("books", books);
+            return "checkOutBooks";
+
+        } catch (UnAuthorizedUserException e) {
+            model.addAttribute("errorMessage", "Unauthorized user \n Login to continue");
+            return "login";
+
+        }
     }
 
 

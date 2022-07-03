@@ -4,7 +4,7 @@
 <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
 
-<head th:replace = "~{fragments/header}" >
+
 
     <script>
 $(document).ready(function() {
@@ -24,6 +24,7 @@ $(document).ready(function() {
     <title>Checked out books</title>
 </head>
 <body>
+<div th:include="~{fragments/header}"></div>
 <style>
 
 th, td {
@@ -35,38 +36,42 @@ table, th, td {
 }
 </style>
 
-    <H1> Books checked out by you</H1>
-    <br>
+<H1> Books checked out by you</H1>
+<br>
 
 
-    <table id ="example" class ="display">
-        <thead>
-        <tr>
+<table id ="example" class ="display">
+    <thead>
+    <tr>
 
-            <th >Book Name </th>
-            <th >Author </th>
-            <th class="no-sort"></th>
+        <th >Book Name </th>
+        <th >Author </th>
+        <th class="no-sort"></th>
 
-        </tr>
-        </thead>
+    </tr>
+    </thead>
 
-        <tbody>
-        <tr th:each="book : ${books}">
+    <tbody>
+    <tr th:each="book : ${books}">
 
-            <td th:text="${book.name}"></td>
-            <td th:text="${book.author}"></td>
-            <td>
+        <td th:text="${book.name}"></td>
+        <td th:text="${book.author}"></td>
+        <td>
                <span th:if="${!book.isAvailable}">
             <a th:href="@{/return/{id}(id=${book.id})}">Return</a>
                </span>
-                <span th:if="${book.isAvailable}">Not Checked Out </span>
 
-            </td>
 
+        </td>
         </tr>
         </tbody>
 
-    </table>
+
+    </tr>
+    </tbody>
+
+
+</table>
 </div>
 
 
