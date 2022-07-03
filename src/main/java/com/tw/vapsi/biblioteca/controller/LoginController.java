@@ -17,6 +17,10 @@ public class LoginController {
         return "login";
     }
 
+    @GetMapping("/users/registration")
+    public String signup() {
+        return "registration";
+    }
     @PostMapping("/users/registration")
     public String registerUser(){
         return "registration";

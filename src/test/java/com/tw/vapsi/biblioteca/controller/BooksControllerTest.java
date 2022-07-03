@@ -60,7 +60,6 @@ class BooksControllerTest extends ControllerTestHelper {
                 .andExpect(MockMvcResultMatchers.view().name("bookList"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("errorMessage"))
                 .andExpect(MockMvcResultMatchers.model().attribute("errorMessage", "Sorry, no books yet!"));
-
         verify(bookService, times(1)).getList();
 
 
