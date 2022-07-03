@@ -28,14 +28,14 @@ public class BooksController {
     }
 
     @GetMapping
-    public String booksList(Model model) {
+    public String fetchBooksFromLibrary(Model model) {
 
-        List<Book> books = bookService.getList();
+        List<Book> books = bookService.fetchBooksFromLibrary();
         if (!books.isEmpty())
             model.addAttribute("books", books);
         else
             model.addAttribute("errorMessage", "Sorry, no books yet!");
-        return "bookList";
+        return "booksInLibrary";
     }
 
 }

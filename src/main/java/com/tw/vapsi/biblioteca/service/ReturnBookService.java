@@ -16,10 +16,8 @@ import java.util.List;
 
 @Service
 public class ReturnBookService {
-
     @Autowired
     private CheckedOutBooksRepository checkedOutBooksRepository;
-
     @Autowired
     private BookRepository bookRepository;
 
@@ -27,7 +25,7 @@ public class ReturnBookService {
     private UserDetailsService userDetailsService;
 
     public CheckedOutBooks removeACheckedOutBook(Long id) throws UnAuthorizedUserException {
-        UserServiceHelper userServiceHelper = new UserServiceHelper();
+            UserServiceHelper userServiceHelper = new UserServiceHelper();
         CheckedOutBooks checkedOutBooks = new CheckedOutBooks(id, userServiceHelper.fetchUserName());
         checkedOutBooksRepository.deleteCheckedOutBookByBookId(id);
         return checkedOutBooks;

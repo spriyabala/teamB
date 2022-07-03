@@ -22,13 +22,10 @@ public class BookService {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    String username;
-
-    public List<Book> getList() {
+    public List<Book> fetchBooksFromLibrary() {
         return bookRepository.findAll();
     }
     public Book saveStaticData(Book book) {
-
         return bookRepository.save(book);
     }
 }

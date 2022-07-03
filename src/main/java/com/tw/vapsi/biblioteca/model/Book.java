@@ -9,17 +9,8 @@ public class Book {
     private long id;
     private String name;
     private String author;
-
-
     private boolean isAvailable=true;
 
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
 
     public Book()
     {
@@ -57,5 +48,12 @@ public class Book {
     public void setName(String name) {
         this.name = name;
     }
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
 
 }

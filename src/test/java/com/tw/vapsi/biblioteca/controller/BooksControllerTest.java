@@ -38,7 +38,7 @@ class BooksControllerTest extends ControllerTestHelper {
         List<Book> list = new ArrayList<Book>();
         list.add(book1);
         list.add(book2);
-        when(bookService.getList()).thenReturn(list);
+        when(bookService.fetchBooksFromLibrary()).thenReturn(list);
 
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())
@@ -46,14 +46,14 @@ class BooksControllerTest extends ControllerTestHelper {
                 .andExpect(MockMvcResultMatchers.model().attributeExists("books"))
                 .andExpect(MockMvcResultMatchers.model().attribute("books", list));
 
-        verify(bookService, times(1)).getList();
+        verify(bookService, times(1)).fetchBooksFromLibrary();
 
     }
 
     @Test
     void shouldDisplayErrorMessageWhenLibraryHasNoBooks() throws Exception, UnAuthorizedUserException {
         List<Book> books = new ArrayList<Book>();
-        when(bookService.getList()).thenReturn(books);
+        when(bookService.fetchBooksFromLibrary()).thenReturn(books);
 
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())
@@ -61,7 +61,7 @@ class BooksControllerTest extends ControllerTestHelper {
                 .andExpect(MockMvcResultMatchers.model().attributeExists("errorMessage"))
                 .andExpect(MockMvcResultMatchers.model().attribute("errorMessage", "Sorry, no books yet!"));
 
-        verify(bookService, times(1)).getList();
+        verify(bookService, times(1)).fetchBooksFromLibrary();
 
 
     }

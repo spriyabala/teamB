@@ -29,18 +29,13 @@ class   BookServiceTest {
         books.add(new Book("Muniya","NBT Publications"));
         when(bookRepository.findAll()).thenReturn(books);
 
-        List<Book> list=bookService.getList();
+        List<Book> list=bookService.fetchBooksFromLibrary();
         assertEquals(books,list);
         verify(bookRepository,times(1)).findAll();
 
     }
 
-    @Test
-    void shouldDisplayMessageWhenNoBooksAvailable() {
 
-
-
-    }
 
 
 

@@ -1,5 +1,6 @@
 package com.tw.vapsi.biblioteca.repository;
 
+import com.tw.vapsi.biblioteca.exception.UnAuthorizedUserException;
 import com.tw.vapsi.biblioteca.model.Book;
 import com.tw.vapsi.biblioteca.model.CheckedOutBooks;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 @DataJpaTest
 class CheckedOutBooksRepositoryTest {
 
@@ -19,6 +22,7 @@ class CheckedOutBooksRepositoryTest {
 
     @Autowired
     private BookRepository bookRepository;
+
 
 
     @Test

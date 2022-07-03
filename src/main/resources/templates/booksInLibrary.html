@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
 
-<head th:replace = "~{fragments/header}" >  <!--th:replace = "~{fragments/header :: menu (type='remove')}">
-<div th:replace = "~{fragments/header}" ></div> -->
+<head>
+    <style>
+th, td {
+  padding: 15px;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+</style>
 
     <script>
 $(document).ready(function() {
@@ -24,17 +34,7 @@ $(document).ready(function() {
     <title>List of Books</title>
 </head>
 <body>
-<style>
-
-th, td {
-  padding: 15px;
-}
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-
-</style>
+<div th:include="~{fragments/header}"></div>
 <td th:text="${errorMessage}"></td>
 
 <div  th:if="${books != null}">
@@ -58,21 +58,23 @@ table, th, td {
 
             <td th:text="${book.name}"></td>
             <td th:text="${book.author}"></td>
-           <td>
+            <td>
                <span th:if="${book.isAvailable}">
             <a th:href="@{/checkout/{id}(id=${book.id})}">Checkout</a>
                </span>
-               <span th:if="${!book.isAvailable}">Not Available </span>
+                <span th:if="${!book.isAvailable}">Not Available </span>
 
-           </td>
+            </td>
         </tr>
         </tbody>
 
     </table>
 </div>
 
+
 <p>
     <a href="/" >Home Page</a>
+
 </p>
 </body>
 </html>
