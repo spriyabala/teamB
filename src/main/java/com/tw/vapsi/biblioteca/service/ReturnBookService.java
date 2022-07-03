@@ -1,6 +1,7 @@
 package com.tw.vapsi.biblioteca.service;
 
 import com.tw.vapsi.biblioteca.exception.BookNotAvailableException;
+import com.tw.vapsi.biblioteca.exception.BookNotReturnedException;
 import com.tw.vapsi.biblioteca.exception.UnAuthorizedUserException;
 import com.tw.vapsi.biblioteca.helper.UserServiceHelper;
 import com.tw.vapsi.biblioteca.model.Book;
@@ -24,10 +25,13 @@ public class ReturnBookService {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    public CheckedOutBooks removeACheckedOutBook(Long id) throws UnAuthorizedUserException {
+    public CheckedOutBooks removeACheckedOutBook(Long id) throws UnAuthorizedUserException, BookNotReturnedException {
             UserServiceHelper userServiceHelper = new UserServiceHelper();
         CheckedOutBooks checkedOutBooks = new CheckedOutBooks(id, userServiceHelper.fetchUserName());
-        checkedOutBooksRepository.deleteCheckedOutBookByBookId(id);
+        int rowsDeleted=checkedOutBooksRepository.deleteCheckedOutBookByBookId(id);
+        if(rowsDeleted==0)
+            throw new BookNotReturnedException();
+
         return checkedOutBooks;
 
     }
