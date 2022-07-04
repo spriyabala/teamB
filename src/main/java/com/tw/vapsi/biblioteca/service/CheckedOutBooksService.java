@@ -39,10 +39,11 @@ public class CheckedOutBooksService {
             throw new UnAuthorizedUserException();
     }
 
-    public Book bookAvailable(long id) throws BookNotAvailableException {
+    public Book bookAvailableInLibrary(long id) throws BookNotAvailableException {
         Optional<Book> book = bookRepository.findById(id);
-        if (!book.isPresent())
+        if (!book.isPresent() || !book.get().isAvailable())
             throw new BookNotAvailableException();
+
         return book.get();
 
     }
@@ -60,6 +61,8 @@ public class CheckedOutBooksService {
     public List<CheckedOutBooks> getCheckOutBookList() {
         return checkedOutBooksRepository.findAll();
     }
+
+
 }
 
 

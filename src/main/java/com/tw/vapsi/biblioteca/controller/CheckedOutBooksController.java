@@ -22,13 +22,12 @@ public class CheckedOutBooksController {
     private CheckedOutBooksService checkedOutBooksService;
 
 
-
     @GetMapping("/{id}")
-    public String checkedOutBook(@PathVariable("id") long id,Model model) {
+    public String checkedOutBook(@PathVariable("id") long id, Model model) {
 
         try {
             checkedOutBooksService.checkUserAccess();
-            Book book =checkedOutBooksService.bookAvailable(id);
+            Book book = checkedOutBooksService.bookAvailableInLibrary(id);
             checkedOutBooksService.saveCheckoutDetails(id);
             checkedOutBooksService.updateAvailableFlag(book);
             model.addAttribute("message", "Check out successful !!!");
@@ -43,6 +42,7 @@ public class CheckedOutBooksController {
             return "booksInLibrary";
         }
     }
+
     @GetMapping
     public String viewCheckOutBooks(Model model) {
         try {
@@ -57,7 +57,6 @@ public class CheckedOutBooksController {
 
         }
     }
-
 
 
 }

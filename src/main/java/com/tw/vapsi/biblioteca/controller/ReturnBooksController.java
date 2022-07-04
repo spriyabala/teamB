@@ -26,7 +26,7 @@ public class ReturnBooksController {
 
         try {
             returnBookService.checkUserAccess();
-            Book book =checkedOutBooksService.bookAvailable(id);
+            Book book =checkedOutBooksService.bookAvailableInLibrary(id);
             returnBookService.removeACheckedOutBook(id);
             returnBookService.updateAvailableFlag(book);
             model.addAttribute("message", "Returned Book successful !!!");
@@ -35,7 +35,6 @@ public class ReturnBooksController {
         } catch (UnAuthorizedUserException e) {
             model.addAttribute("errorMessage", "Unauthorized user \n Login to continue");
             return "login";
-
         } catch (BookNotAvailableException e) {
             model.addAttribute("errorMessage", "Book not Checked Out");
             return "booksInLibrary";
