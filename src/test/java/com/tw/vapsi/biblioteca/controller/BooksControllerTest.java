@@ -42,7 +42,7 @@ class BooksControllerTest extends ControllerTestHelper {
 
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("bookList"))
+                .andExpect(MockMvcResultMatchers.view().name("booksInLibrary"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("books"))
                 .andExpect(MockMvcResultMatchers.model().attribute("books", list));
 
