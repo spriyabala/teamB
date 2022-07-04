@@ -19,6 +19,13 @@ public class Book {
         this.author = author;
         this.name = name;
     }
+
+    public Book(long id, String name, String author) {
+        this.id =id;
+        this.author = author;
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

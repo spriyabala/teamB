@@ -1,12 +1,8 @@
 package com.tw.vapsi.biblioteca.service;
 
-import com.tw.vapsi.biblioteca.helper.UserServiceHelper;
 import com.tw.vapsi.biblioteca.model.Book;
-import com.tw.vapsi.biblioteca.model.CheckedOutBooks;
 import com.tw.vapsi.biblioteca.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +21,13 @@ public class BookService {
     public List<Book> fetchBooksFromLibrary() {
         return bookRepository.findAll();
     }
-    public Book saveStaticData(Book book) {
+   /* public Book saveStaticData(Book book) {
         return bookRepository.save(book);
     }
+*/
+    public Book save(long id, String name, String author) {
+        Book book = new Book(id,name,author);
+        return bookRepository.save(book);
+    }
+
 }

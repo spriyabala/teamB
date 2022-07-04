@@ -16,11 +16,11 @@
             <a class="nav-link" th:href="@{/mainMenu}">Home<span class="sr-only">(current)</span></a>
         </li>
      <li class="nav-item" th:class="${activePage == 'bookList'} ? 'nav-item active' : 'nav-item'">
-        <a class="nav-link" th:href="@{/books}">View/Checkout Books<span class="sr-only">(current)</span></a>
+        <a class="nav-link" th:href="@{/books}">View Books<span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item" th:class="${activePage == 'checkout'} ? 'nav-item active' : 'nav-item'">
-        <a class="nav-link" th:href="@{/checkout}">Return Book</a>
+        <a class="nav-link" th:href="@{/checkout}">Checked out/Return Book</a>
       </li>
       <li class="nav-item" th:class="${activePage == 'index'} ? 'nav-item active' : 'nav-item'">
         <a class="nav-link" th:href="@{/biblioteca}">Logout</a>

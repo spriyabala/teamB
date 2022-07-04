@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 @Controller
 @RequestMapping("/books")
@@ -13,9 +15,8 @@ public class BooksController {
     @Autowired
     private BookService bookService;
 
-    @PostConstruct
+  /*  @PostConstruct
     public void loadStaticData() {
-        bookService.saveStaticData(new Book("The Adventure Of River", "Enid Blyton"));
         bookService.saveStaticData(new Book("Rusty Runs Away", "Ruskin Bond"));
         bookService.saveStaticData(new Book("Who Will Cry When you Die?", "Robin Sharma"));
         bookService.saveStaticData(new Book("Fear Not: Be Strong", "Swami Vivekananda"));
@@ -25,7 +26,9 @@ public class BooksController {
         bookService.saveStaticData(new Book("The Notebook", "Nicholas Sparks"));
         bookService.saveStaticData(new Book("In a Dark, Dark Wood", "Ruth Ware"));
         bookService.saveStaticData(new Book("Me Before You", "Jojo Moyes"));
-    }
+
+
+    }*/
 
     @GetMapping
     public String fetchBooksFromLibrary(Model model) {
@@ -37,5 +40,18 @@ public class BooksController {
             model.addAttribute("errorMessage", "Sorry, no books yet!");
         return "booksInLibrary";
     }
-
+    @PostMapping
+    public String createBook(@RequestParam @Valid long id,
+                             @RequestParam @Valid String name,
+                             @RequestParam @Valid String author,
+                             HttpServletResponse response) {
+        if(name.isEmpty() || author.isEmpty() ){
+            response.setStatus(400);
+            //  return "Incomplete Input";
+        }
+        else{
+            bookService.save(id,name,author);
+        }
+        return "index";
+    }
 }
