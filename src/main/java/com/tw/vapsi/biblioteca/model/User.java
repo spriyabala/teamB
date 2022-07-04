@@ -26,7 +26,7 @@ public class User {
 
     }
 
-    public User(String lokesh, String gupta, String s) {
+    public User() {
 
     }
 
