@@ -29,7 +29,6 @@ public class CheckedOutBooksService {
         UserServiceHelper userServiceHelper = new UserServiceHelper();
         CheckedOutBooks checkedOutBooks = new CheckedOutBooks(id, userServiceHelper.fetchUserName());
         return checkedOutBooksRepository.save(checkedOutBooks);
-       // return checkedOutBooks;
 
     }
 
@@ -58,5 +57,10 @@ public class CheckedOutBooksService {
         return checkedOutBooksRepository.findCheckedOutBook
                 (userServiceHelper.fetchUserName());
     }
-
+    public List<CheckedOutBooks> getCheckOutBookList() {
+        return checkedOutBooksRepository.findAll();
     }
+}
+
+
+

@@ -1,7 +1,6 @@
 package com.tw.vapsi.biblioteca.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 @Entity
@@ -27,7 +26,7 @@ public class User {
 
     }
 
-    public User() {
+    public User(String lokesh, String gupta, String s) {
 
     }
 

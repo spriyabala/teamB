@@ -26,10 +26,10 @@ public class ReturnBookService {
     private UserDetailsService userDetailsService;
 
     public CheckedOutBooks removeACheckedOutBook(Long id) throws UnAuthorizedUserException, BookNotReturnedException {
-            UserServiceHelper userServiceHelper = new UserServiceHelper();
+        UserServiceHelper userServiceHelper = new UserServiceHelper();
         CheckedOutBooks checkedOutBooks = new CheckedOutBooks(id, userServiceHelper.fetchUserName());
-        int rowsDeleted=checkedOutBooksRepository.deleteCheckedOutBookByBookId(id);
-        if(rowsDeleted==0)
+        int rowsDeleted = checkedOutBooksRepository.deleteCheckedOutBookByBookId(id);
+        if (rowsDeleted == 0)
             throw new BookNotReturnedException();
 
         return checkedOutBooks;
@@ -62,8 +62,4 @@ public class ReturnBookService {
         bookRepository.save(book);
     }
 
-    public List<CheckedOutBooks> getCheckOutBookList() {
-        return checkedOutBooksRepository.findAll();
-    }
 }
-

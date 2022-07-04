@@ -23,9 +23,9 @@ class ReturnBooksControllerTest extends ControllerTestHelper {
     private MockMvc mockMvc;
     @MockBean
     private ReturnBookService returnBookService;
-
     @MockBean
     private CheckedOutBooksService checkedOutBooksService;
+
 
     @Test
     @WithMockUser
@@ -37,7 +37,7 @@ class ReturnBooksControllerTest extends ControllerTestHelper {
         List<CheckedOutBooks> list1 = new ArrayList<CheckedOutBooks>();
         list1.add(toBeReturnedchbook1);
         list1.add(chbook2);
-        when(returnBookService.getCheckOutBookList()).thenReturn((list1));
+        when(checkedOutBooksService.getCheckOutBookList()).thenReturn((list1));
 
         mockMvc.perform(get("/return/1"))
                 .andExpect(status().isOk())
@@ -49,30 +49,8 @@ class ReturnBooksControllerTest extends ControllerTestHelper {
         verify(returnBookService, times(1)).removeACheckedOutBook(1L);
 
     }
-/*
-    @Test
-    @WithMockUser
-    void shouldDisplayUnsuccessfulReturnOfBookNotCheckedFromLibrary() throws Exception {
-        CheckedOutBooks toBeReturnedchbook1 = new CheckedOutBooks(1,"abc@gmail.com");
 
 
-        List<CheckedOutBooks> list1 = new ArrayList<CheckedOutBooks>();
-        list1.add(toBeReturnedchbook1);
-        //list1.add(toBeReturnedchbook1);
-
-        when(returnBookService.getCheckOutBookList()).thenReturn((list1));
-
-        mockMvc.perform(get("/return/1"))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("returnBookSuccess"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("errormessage"))
-                .andExpect(MockMvcResultMatchers.model().attribute("errormessage", "Book not Checked Out"));
-
-
-        verify(returnBookService, times(2)).removeACheckedOutBook(1L);
-
-    }
-*/
 
 
 }

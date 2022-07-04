@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Users</title>
+</head>
+<body>
+<div th:include="~{fragments/header}"></div>
+
+  <H1> List of Users</H1>
+  <br>
+
+
+  <table id ="example" class ="display">
+    <thead>
+    <tr>
+
+      <th >User First Name </th>
+      <th >Email </th>
+      <th class="no-sort"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="user : ${users}">
+
+
+      <td th:text="${user.firstName}"></td>
+      <td th:text="${user.email}"></td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+
+
+<p>
+  <a href="/" >Home Page</a>
+
+</p>
+</body>
+</html>
