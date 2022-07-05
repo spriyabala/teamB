@@ -78,7 +78,7 @@ class UserServiceTest {
         when(userRepository.save(userToBeCreated)).thenReturn(expectedUser);
         when(bCryptPasswordEncoder.encode("password")).thenReturn("encoded-password");
 
-        User actualUser = userService.save("Micky", "Mouse", "micky-mouse@example.com", "password");
+        User actualUser = userService.save(new User("Micky", "Mouse", "micky-mouse@example.com", "password"));
 
         assertEquals(expectedUser, actualUser);
         verify(userRepository, times(1)).save(userToBeCreated);
