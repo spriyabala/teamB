@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
@@ -19,22 +18,6 @@ import java.util.List;
 public class BooksController {
     @Autowired
     private BookService bookService;
-
-
-    @PostConstruct
-    public void loadStaticData() {
-        bookService.saveStaticData(new Book("Rusty Runs Away", "Ruskin Bond"));
-        bookService.saveStaticData(new Book("Who Will Cry When you Die?", "Robin Sharma"));
-        bookService.saveStaticData(new Book("Fear Not: Be Strong", "Swami Vivekananda"));
-        bookService.saveStaticData(new Book("The Girl on the Train", "Paula Hawkins"));
-        bookService.saveStaticData(new Book("The Help", "Kathryn Stockett"));
-        bookService.saveStaticData(new Book("Gone Girl", "Gillian Flynn"));
-        bookService.saveStaticData(new Book("The Notebook", "Nicholas Sparks"));
-        bookService.saveStaticData(new Book("In a Dark, Dark Wood", "Ruth Ware"));
-        bookService.saveStaticData(new Book("Me Before You", "Jojo Moyes"));
-
-
-    }
 
     @GetMapping
     public String fetchBooksFromLibrary(Model model) {
@@ -54,7 +37,6 @@ public class BooksController {
                              HttpServletResponse response) {
         if (name.isEmpty() || author.isEmpty()) {
             response.setStatus(400);
-            //  return "Incomplete Input";
         } else {
             bookService.save(id, name, author);
         }
@@ -62,11 +44,10 @@ public class BooksController {
     }
 
     @GetMapping("/checkout/{id}")
-    public String checkedOutBook(@PathVariable("id") long id, Model model) {
+    public String checkedOut(@PathVariable("id") long id, Model model) {
 
         try {
             bookService.issueCheckedOutBook(id);
-
             model.addAttribute("message", "Check out successful !!!");
             return "checkOutSuccess";
 
@@ -74,8 +55,7 @@ public class BooksController {
             model.addAttribute("errorMessage", "Unauthorized user \n Login to continue");
             return "login";
 
-        }
-        catch (BookNotAvailableException e) {
+        } catch (BookNotAvailableException e) {
             model.addAttribute("errorMessage", "Book not available for checkout");
             return "login";
 
@@ -102,10 +82,6 @@ public class BooksController {
         try {
 
             bookService.returnBook(id);
-            /*returnBookService.checkUserAccess();
-            //  Book book =checkedOutBooksService.bookAvailableInLibrary(id);
-            returnBookService.removeACheckedOutBook(id);
-            returnBookService.updateAvailableFlag(null);*/
             model.addAttribute("message", "Returned Book successful !!!");
             return "returnBookSuccess";
 
@@ -115,10 +91,4 @@ public class BooksController {
         }
 
     }
-
-
-
-
-
-
 }
