@@ -1,5 +1,6 @@
 package com.tw.vapsi.biblioteca.service;
 
+import com.tw.vapsi.biblioteca.controller.UserRequest;
 import com.tw.vapsi.biblioteca.model.User;
 import com.tw.vapsi.biblioteca.repository.UserRepository;
 import com.tw.vapsi.biblioteca.service.dto.UserDetailsDTO;
@@ -28,9 +29,13 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("No user exists with username : %s", username)));
     }
 
-    public User save(String firstName, String lastName, String email, String password) {
-        String encodePassword = bCryptPasswordEncoder.encode(password);
-        User user = new User(firstName, lastName, email, encodePassword);
+    public User save(UserRequest userRequest){
+        return save(new User(userRequest.getFirstName(),userRequest.getLastName(),userRequest.getEmail(),userRequest.getPassword()));
+    }
+
+    public User save(User user) {
+       user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
         return userRepository.save(user);
     }
 

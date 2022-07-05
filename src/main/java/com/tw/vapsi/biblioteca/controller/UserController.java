@@ -26,20 +26,14 @@ public class UserController {
     }
 
     @PostMapping
-    public String createUser(@RequestParam @Valid String firstName,
-                             @RequestParam @Valid String lastName,
-                             @RequestParam @Valid String email,
-                             @RequestParam @Valid String password,
-                             HttpServletResponse response) {
-       if(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() ){
-                    response.setStatus(400);
-                  //  return "Incomplete Input";
-       }
-       else{
-           userService.save(firstName,lastName,email,password);
+    public String createUser(@RequestBody @Valid UserRequest userRequest,Model model) {
 
-       }
-         return "index";
+
+
+       User user =  userService.save(userRequest);
+        model.addAttribute("message","User added successfully");
+
+          return "index";
     }
 
     @GetMapping

@@ -1,5 +1,6 @@
 package com.tw.vapsi.biblioteca.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tw.vapsi.biblioteca.controller.helper.ControllerTestHelper;
 import com.tw.vapsi.biblioteca.model.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +25,9 @@ class UserControllerTest extends ControllerTestHelper {
     private String lastName;
     private String password;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @BeforeEach
     void setUp() {
         email = "test-mail@test.com";
@@ -33,19 +37,25 @@ class UserControllerTest extends ControllerTestHelper {
     }
 
     @Test
-    void shouldCreateAUserWithTheProvidedDetails() throws Exception {
-        User user = new User(1L, firstName, lastName, email, password);
-        when(userService.save(firstName, lastName, email, password))
-                .thenReturn(user);
+    void registerCustomerWithFirstNameLastNameEmailAndPassword() throws Exception {
+        User returnedUser = new User(1L, firstName, lastName, email, password);
+
+        UserRequest userRequest = new UserRequest(firstName, lastName, email, password);
+        when(userService.save(userRequest))
+                .thenReturn(returnedUser);
+
+        String jsonRequest = objectMapper.writeValueAsString(userRequest);
 
         mockMvc.perform(post("/users")
-                        .param("firstName", firstName)
-                        .param("lastName", lastName)
-                        .param("email", email)
-                        .param("password", password)
+
+                        .content(jsonRequest)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("index"));
+                .andExpect(MockMvcResultMatchers.view().name("index"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("message"))
+                .andExpect(MockMvcResultMatchers.model().attribute("message", "User added successfully"));
+
+        verify(userService, never()).save(userRequest);
 
     }
 
@@ -53,6 +63,7 @@ class UserControllerTest extends ControllerTestHelper {
     void shouldNotCreateUserWhenFirstNameIsMissing() throws Exception {
 
         mockMvc.perform(post("/users")
+
                         .param("lastName", lastName)
                         .param("email", email)
                         .param("password", password)
@@ -61,7 +72,7 @@ class UserControllerTest extends ControllerTestHelper {
                 .andExpect(status()
                         .reason(createReasonFor("firstName"))
                 );
-        verify(userService, never()).save(anyString(), anyString(), anyString(), anyString());
+        //verify(userService, never()).save(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -76,7 +87,7 @@ class UserControllerTest extends ControllerTestHelper {
                 .andExpect(status()
                         .reason(createReasonFor("lastName"))
                 );
-        verify(userService, never()).save(anyString(), anyString(), anyString(), anyString());
+       // verify(userService, never()).save(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -91,7 +102,7 @@ class UserControllerTest extends ControllerTestHelper {
                 .andExpect(status()
                         .reason(createReasonFor("email"))
                 );
-        verify(userService, never()).save(anyString(), anyString(), anyString(), anyString());
+        //verify(userService, never()).save(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -106,7 +117,7 @@ class UserControllerTest extends ControllerTestHelper {
                 .andExpect(status()
                         .reason(createReasonFor("password"))
                 );
-        verify(userService, never()).save(anyString(), anyString(), anyString(), anyString());
+       // verify(userService, never()).save(any());
     }
 
     private String createReasonFor(String parameterName) {
