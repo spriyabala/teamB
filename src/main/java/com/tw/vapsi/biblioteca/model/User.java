@@ -1,6 +1,8 @@
 package com.tw.vapsi.biblioteca.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,6 +17,16 @@ public class User {
     private String email;
     private String password;
 
+    @OneToMany
+    private List<Book> checkedOutBook = new ArrayList<Book>();
+
+    public List<Book> getCheckedOutBook() {
+        return checkedOutBook;
+    }
+
+    public void setCheckedOutBook(List<Book> checkedOutBook) {
+        this.checkedOutBook = checkedOutBook;
+    }
 
     public User(long id, String firstName, String lastName, String email, String password) {
 
