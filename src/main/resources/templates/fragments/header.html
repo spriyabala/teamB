@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
   <meta charset="UTF-8">
   <title>Library</title>
@@ -12,17 +12,29 @@
 
   <div class="collapse navbar-collapse" id="navbars">
     <ul class="navbar-nav mr-auto">
-        <li class="nav-item" th:class="${activePage == 'mainMenu'} ? 'nav-item active' : 'nav-item'">
-            <a class="nav-link" th:href="@{/mainMenu}">Home<span class="sr-only">(current)</span></a>
+        <li class="nav-item" th:class="${activePage == 'index'} ? 'nav-item active' : 'nav-item'">
+            <a class="nav-link" th:href="@{/biblioteca}">Home<span class="sr-only">(current)</span></a>
         </li>
      <li class="nav-item" th:class="${activePage == 'bookList'} ? 'nav-item active' : 'nav-item'">
         <a class="nav-link" th:href="@{/books}">View Books<span class="sr-only">(current)</span></a>
       </li>
 
-      <li class="nav-item" th:class="${activePage == 'checkout'} ? 'nav-item active' : 'nav-item'">
-        <a class="nav-link" th:href="@{/checkout}">Checked out/Return Book</a>
-      </li>
+            <li sec:authorize = "isFullyAuthenticated()" class="nav-item" th:class="${activePage == 'checkout'} ? 'nav-item active' : 'nav-item'">
+                <a class="nav-link" th:href="@{/checkout}">Checked out/Return Book</a>
+            </li>
+
+            <li sec:authorize="isAnonymous()" class="nav-item" th:class="${activePage == 'login'} ? 'nav-item active' : 'nav-item'">
+                <a class="nav-link" th:href="@{/login}">Login</a> </li>
+            <li sec:authorize="isAnonymous()" class="nav-item" th:class="${activePage == 'Registration'} ? 'nav-item active' : 'nav-item'">
+                <a class="nav-link" th:href="@{/users/registration}">Register</a> </li>
+        <li sec:authorize="isAuthenticated()" class="nav-item" th:class="${activePage == 'Registration'} ? 'nav-item active' : 'nav-item'" >
+            <a class="nav-link" href='/logout'>Sign Out</a></li>
     </ul>
+      <span sec:authorize="isAuthenticated()">
+              <p style="color:White;" >  | Logged user Id: <span sec:authentication="name"></span> | </p>
+         <!--       Roles: <span sec:authentication="principal.authorities"></span> | -->
+            </span>
+        </div>
   </div>
 
 </nav>

@@ -37,7 +37,6 @@ public class UserController {
        }
        else{
            userService.save(firstName,lastName,email,password);
-
        }
          return "index";
     }

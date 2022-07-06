@@ -29,7 +29,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                //.antMatchers("/books").authenticated()
+              //  .antMatchers("/index").authenticated()
+                .antMatchers("/checkOutBooks").authenticated()
                 .antMatchers("/mainMenu").authenticated()
                 .anyRequest().permitAll()
                 .and()
@@ -41,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/index?logout")
+                    .logoutSuccessUrl("/?logout")
                     .deleteCookies("my-remember-me-cookie")
                     .permitAll()
                     .and();

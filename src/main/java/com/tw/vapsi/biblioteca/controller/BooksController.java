@@ -14,22 +14,6 @@ import java.util.List;
 public class BooksController {
     @Autowired
     private BookService bookService;
-
-  /*  @PostConstruct
-    public void loadStaticData() {
-        bookService.saveStaticData(new Book("Rusty Runs Away", "Ruskin Bond"));
-        bookService.saveStaticData(new Book("Who Will Cry When you Die?", "Robin Sharma"));
-        bookService.saveStaticData(new Book("Fear Not: Be Strong", "Swami Vivekananda"));
-        bookService.saveStaticData(new Book("The Girl on the Train", "Paula Hawkins"));
-        bookService.saveStaticData(new Book("The Help", "Kathryn Stockett"));
-        bookService.saveStaticData(new Book("Gone Girl", "Gillian Flynn"));
-        bookService.saveStaticData(new Book("The Notebook", "Nicholas Sparks"));
-        bookService.saveStaticData(new Book("In a Dark, Dark Wood", "Ruth Ware"));
-        bookService.saveStaticData(new Book("Me Before You", "Jojo Moyes"));
-
-
-    }*/
-
     @GetMapping
     public String fetchBooksFromLibrary(Model model) {
 
@@ -47,7 +31,6 @@ public class BooksController {
                              HttpServletResponse response) {
         if(name.isEmpty() || author.isEmpty() ){
             response.setStatus(400);
-            //  return "Incomplete Input";
         }
         else{
             bookService.save(id,name,author);

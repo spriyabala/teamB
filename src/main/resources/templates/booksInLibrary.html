@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
@@ -34,18 +36,21 @@ $(document).ready(function() {
     <title>List of Books</title>
 </head>
 <body>
+
 <div th:include="~{fragments/header}"></div>
+<div sec:authorize="isAnonymous()">
+   <p> Welcome Anonymous User </p>
+</div>
+
 <td th:text="${errorMessage}"></td>
+
 
 <div  th:if="${books != null}">
     <H1> List of Books</H1>
     <br>
-
-
     <table id ="example" class ="display">
         <thead>
         <tr>
-
             <th >Book Name </th>
             <th >Author </th>
             <th class="no-sort"></th>
