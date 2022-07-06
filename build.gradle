@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.6.6'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'jacoco'
 }
 
 group = 'com.tw.vapsi'
@@ -9,6 +10,33 @@ version = '0.0.1-SNAPSHOT'
 
 repositories {
 	mavenCentral()
+}
+jacocoTestReport {
+	dependsOn test // tests are required to run before generating the report
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: [
+					"com/tw/vapsi/biblioteca/BibliotecaApplication.class",
+					"com/tw/vapasi/biblioteca/service/dto/**",
+					"com/tw/vapsi/biblioteca/model/**"
+			])
+		}))
+	}
+}
+
+jacoco {
+	toolVersion = "0.8.5"
+	reportsDir = file("$buildDir/jacoco")
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = 1
+			}
+		}
+	}
 }
 
 dependencies {
@@ -33,4 +61,7 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+test {
+	finalizedBy jacocoTestReport // report is always generated after tests run
 }
