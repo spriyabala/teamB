@@ -12,18 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
     @Autowired
     private UserService userService;
+
     @GetMapping("/login")
     public String login() {
         return "login";
-    }
-
-    @GetMapping("/users/registration")
-    public String signup() {
-        return "registration";
-    }
-    @PostMapping("/users/registration")
-    public String registerUser(){
-        return "registration";
     }
 
 

@@ -1,18 +1,18 @@
 package com.tw.vapsi.biblioteca.controller;
 
-import com.tw.vapsi.biblioteca.model.User;
+
 import com.tw.vapsi.biblioteca.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.ui.Model;
+
+import org.springframework.validation.Errors;
+
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 
 @Controller
-@Validated
 @RequestMapping("/users")
 public class UserController {
 
@@ -23,21 +23,22 @@ public class UserController {
     }
 
     @PostMapping
-    public String createUser(@RequestParam @Valid String firstName,
-                             @RequestParam @Valid String lastName,
-                             @RequestParam @Valid String email,
-                             @RequestParam @Valid String password,
-                             HttpServletResponse response) {
-        if(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() ){
-            response.setStatus(400);
-            //  return "Incomplete Input";
-        }
-        else{
-            userService.save(firstName,lastName,email,password);
+    public String createUser(@Valid UserForm userForm, Errors errors, Model model) throws Exception {
+        if (errors.hasErrors()) {
 
+            return "registration";
         }
+
+        model.addAttribute("message", "Registration Successful...");
+
+        userService.save(userForm.getFirstName(), userForm.getLastName(), userForm.getEmail(), userForm.getPassword());
+
         return "index";
     }
 
+    @GetMapping
+    public String signup(UserForm userForm) {
+        return "registration";
+    }
 
 }
