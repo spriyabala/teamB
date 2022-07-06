@@ -20,18 +20,16 @@
       </li>
 
             <li sec:authorize = "isFullyAuthenticated()" class="nav-item" th:class="${activePage == 'checkout'} ? 'nav-item active' : 'nav-item'">
-                <a class="nav-link" th:href="@{/checkout}">Checked out/Return Book</a>
+                <a class="nav-link" th:href="@{/books/checkout}">Checked out/Return Book</a>
             </li>
 
             <li sec:authorize="isAnonymous()" class="nav-item" th:class="${activePage == 'login'} ? 'nav-item active' : 'nav-item'">
                 <a class="nav-link" th:href="@{/login}">Login</a> </li>
             <li sec:authorize="isAnonymous()" class="nav-item" th:class="${activePage == 'Registration'} ? 'nav-item active' : 'nav-item'">
-                <a class="nav-link" th:href="@{/users/registration}">Register</a> </li>
+                <a class="nav-link" th:href="@{/users}">Register</a> </li>
         <li sec:authorize="isAuthenticated()" class="nav-item" th:class="${activePage == 'Registration'} ? 'nav-item active' : 'nav-item'" >
             <a class="nav-link" href='/logout'>Sign Out</a></li>
-      <li class="nav-item" th:class="${activePage == 'checkout'} ? 'nav-item active' : 'nav-item'">
-        <a class="nav-link" th:href="@{/books/checkout}">Checked out/Return Book</a>
-      </li>
+
     </ul>
       <span sec:authorize="isAuthenticated()">
               <p style="color:White;" >  | Logged user Id: <span sec:authentication="name"></span> | </p>
