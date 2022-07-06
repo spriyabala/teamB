@@ -1,23 +1,35 @@
 package com.tw.vapsi.biblioteca.controller;
 
+import com.tw.vapsi.biblioteca.exception.BookAlreadyCheckedOutException;
+import com.tw.vapsi.biblioteca.exception.BookAlreadyReturnedException;
 import com.tw.vapsi.biblioteca.exception.BookNotAvailableException;
 import com.tw.vapsi.biblioteca.exception.UnAuthorizedUserException;
 import com.tw.vapsi.biblioteca.model.Book;
 import com.tw.vapsi.biblioteca.service.BookService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/books")
 public class BooksController {
     @Autowired
     private BookService bookService;
+
+
+
+
+
+
+
     @GetMapping
     public String fetchBooksFromLibrary(Model model) {
 
@@ -58,7 +70,12 @@ public class BooksController {
 
         } catch (BookNotAvailableException e) {
             model.addAttribute("errorMessage", "Book not available for checkout");
-            return "login";
+            return "booksInLibrary";
+
+        }
+        catch (BookAlreadyCheckedOutException e) {
+            model.addAttribute("errorMessage", "Book already checked out");
+            return "booksInLibrary";
 
         }
     }
@@ -75,21 +92,33 @@ public class BooksController {
             return "login";
 
         }
+
     }
 
     @GetMapping("/return/{id}")
     public String returnBook(@PathVariable("id") long id, Model model) {
 
         try {
-
             bookService.returnBook(id);
             model.addAttribute("message", "Returned Book successful !!!");
             return "returnBookSuccess";
 
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Book not Checked Out");
-            return "booksInLibrary";
-        }
+        } catch (UnAuthorizedUserException e) {
 
+            model.addAttribute("errorMessage", "Unauthorized user \n Login to continue");
+            return "login";
+        }
+        catch (BookNotAvailableException e)
+        {
+            model.addAttribute("errorMessage", "Book not Checked Out");
+            return "returnBookSuccess";
+        }
+        catch (BookAlreadyReturnedException e)
+        {
+            model.addAttribute("errorMessage", "Book already returned");
+            return "returnBookSuccess";
+        }
     }
+
+
 }
