@@ -24,11 +24,5 @@ class LoginControllerTest extends ControllerTestHelper {
                 .andExpect(content().contentType("text/html;charset=UTF-8"));
     }
 
-    @Test
-    void shouldLoadTheSignUpPage() throws Exception {
-        mockMvc.perform(get("/users/registration"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("text/html;charset=UTF-8"));
 
-    }
 }

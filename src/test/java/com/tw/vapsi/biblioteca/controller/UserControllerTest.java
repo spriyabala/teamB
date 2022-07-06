@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -177,6 +178,14 @@ class UserControllerTest extends ControllerTestHelper {
                 .andExpect(MockMvcResultMatchers.view().name("registration"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("message"))
                 .andExpect(MockMvcResultMatchers.model().attribute("message", "Email Already Exist"));
+
+    }
+
+    @Test
+    void shouldLoadTheSignUpPage() throws Exception {
+        mockMvc.perform(get("/users"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"));
 
     }
 
