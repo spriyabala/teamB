@@ -24,4 +24,11 @@ class HomeControllerTest extends ControllerTestHelper {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("index"));
     }
+
+    @Test
+    void shouldShowMainMenu() throws Exception {
+        mockMvc.perform(get("/mainMenu").contentType("application/json"))
+                .andExpect(status().is3xxRedirection());
+
+    }
 }

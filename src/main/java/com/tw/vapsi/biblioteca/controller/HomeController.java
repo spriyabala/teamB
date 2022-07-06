@@ -14,5 +14,11 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/mainMenu")
+    public String usermain()
+    {
+        return "mainMenu";
+    }
+
 
 }

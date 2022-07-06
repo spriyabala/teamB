@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BookAlreadyReturnedException.class)
-    public String handleBookNotAvailableException(BookAlreadyReturnedException exception, Model model){
+    public String handleBookAlreadyReturnedException(BookAlreadyReturnedException exception, Model model){
 
         model.addAttribute("errorMessage", "Book already returned");
         return "returnBookSuccess";
@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BookAlreadyCheckedOutException.class)
-    public String handleBookNotAvailableException(BookAlreadyCheckedOutException exception, Model model){
+    public String handleBookAlreadyCheckedOutException(BookAlreadyCheckedOutException exception, Model model){
 
         model.addAttribute("errorMessage", "Book already checked out");
         return "booksInLibrary";
