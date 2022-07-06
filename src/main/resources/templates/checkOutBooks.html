@@ -58,7 +58,7 @@ table, th, td {
         <td th:text="${book.author}"></td>
         <td>
                <span th:if="${!book.isAvailable}">
-            <a th:href="@{/return/{id}(id=${book.id})}">Return</a>
+            <a th:href="@{/books/return/{id}(id=${book.id})}">Return</a>
                </span>
 
 

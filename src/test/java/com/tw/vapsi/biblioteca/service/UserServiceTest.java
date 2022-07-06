@@ -1,5 +1,7 @@
 package com.tw.vapsi.biblioteca.service;
 
+import com.tw.vapsi.biblioteca.exception.EmailAlreadyExistException;
+import com.tw.vapsi.biblioteca.exception.ServiceException;
 import com.tw.vapsi.biblioteca.model.User;
 import com.tw.vapsi.biblioteca.repository.UserRepository;
 import com.tw.vapsi.biblioteca.service.dto.UserDetailsDTO;
@@ -61,7 +63,7 @@ class UserServiceTest {
     }
 
     @Test
-    void shouldSaveTheUserInformation() {
+    void shouldSaveTheUserInformation() throws ServiceException {
         User userToBeCreated = new User(
                 "Micky",
                 "Mouse",
@@ -82,5 +84,22 @@ class UserServiceTest {
 
         assertEquals(expectedUser, actualUser);
         verify(userRepository, times(1)).save(userToBeCreated);
+    }
+
+    @Test
+    void shouldThrowEmailAlreadyExistException() {
+        User user = new User(
+                "Micky",
+                "Mouse",
+                "micky-mouse@example.com",
+                "encoded-password");
+        when(userRepository.findByEmail("micky-mouse@example.com")).thenReturn(Optional.of(user));
+
+        EmailAlreadyExistException actualException = assertThrows(
+                EmailAlreadyExistException.class,
+                () -> userService.save("Micky", "Mouse", "micky-mouse@example.com", "password")
+        );
+
+
     }
 }

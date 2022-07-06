@@ -65,7 +65,7 @@ $(document).ready(function() {
             <td th:text="${book.author}"></td>
             <td>
                <span th:if="${book.isAvailable}">
-            <a th:href="@{/checkout/{id}(id=${book.id})}">Checkout</a>
+            <a th:href="@{/books/checkout/{id}(id=${book.id})}">Checkout</a>
                </span>
                 <span th:if="${!book.isAvailable}">Not Available </span>
 

@@ -1,41 +1,54 @@
-package com.tw.vapsi.biblioteca.controller;
+package com.tw.vapsi.biblioteca.controller.qa;
 
-import com.tw.vapsi.biblioteca.controller.helper.ControllerTestHelper;
-import com.tw.vapsi.biblioteca.exception.EmailAlreadyExistException;
-import com.tw.vapsi.biblioteca.model.User;
+
+import com.tw.vapsi.biblioteca.BibliotecaApplication;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = UserController.class)
-class UserControllerTest extends ControllerTestHelper {
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
+
+@SpringBootTest(webEnvironment =  SpringBootTest.WebEnvironment.RANDOM_PORT,
+        classes = BibliotecaApplication.class
+)
+@AutoConfigureMockMvc
+public class UserControllerQATest  {
+
+
     @Autowired
     private MockMvc mockMvc;
+
+
+
     private String email;
     private String firstName;
     private String lastName;
     private String password;
-    private static final String FORM_OBJECT_ALIAS = "userForm";
-    private static final String FORM_FIELD_NAME_FIRST_NAME = "firstName";
 
-    private static final String FORM_FIELD_NAME_LAST_NAME= "lastName";
+    public static final String FORM_OBJECT_ALIAS = "userForm";
+    public static final String FORM_FIELD_NAME_TITLE = "firstName";
 
-    private static final String VALIDATION_ERROR_NOT_EMPTY = "NotEmpty";
+    public static final String VALIDATION_ERROR_NOT_EMPTY = "NotEmpty";
+
+    public static final String FORM_FIELD_NAME_LAST_NAME= "lastName";
+
+    public static final String FORM_FIELD_NAME_EMAIL = "email";
+
     private static final String VALIDATION_ERROR_INVALID_EMAIL = "Email";
 
     private static final String FORM_FIELD_NAME_PASSWORD = "password";
-
-    private static final String FORM_FIELD_NAME_EMAIL = "email";
 
     @BeforeEach
     void setUp() {
@@ -46,26 +59,22 @@ class UserControllerTest extends ControllerTestHelper {
     }
 
     @Test
-    void registerACustomerWithFirstNameLastNamePasswordAndEmail() throws Exception {
-        User user = new User(1L, firstName, lastName, email, password);
-        when(userService.save(firstName, lastName, email, password))
-                .thenReturn(user);
-
-        mockMvc.perform(post("/users")
-                        .param("firstName", firstName)
-                        .param("lastName", lastName)
-                        .param("email", email)
-                        .param("password", password)
-                        .contentType(MediaType.APPLICATION_JSON))
+    public void registerACustomerWithFirstNameLastNamePasswordAndEmail() throws Exception {
+         mockMvc.perform(post("/users")
+                                .param("firstName", firstName)
+                                .param("lastName", lastName)
+                                .param("email", email)
+                                .param("password", password)
+                                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("index"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("message"))
                 .andExpect(MockMvcResultMatchers.model().attribute("message", "Registration Successful..."));
-        verify(userService, times(1)).save(anyString(), anyString(), anyString(), anyString());
+
     }
 
     @Test
-    void registrationFailsWithErrorConstrainNotBlankWhenFirstNameMissing() throws Exception {
+    public void registrationFailsWithErrorConstrainNotBlankWhenFirstNameMissing() throws Exception {
 
         mockMvc.perform(post("/users")
                         .param("lastName", lastName)
@@ -74,14 +83,13 @@ class UserControllerTest extends ControllerTestHelper {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeHasFieldErrorCode(
-                        FORM_OBJECT_ALIAS,
-                                FORM_FIELD_NAME_FIRST_NAME,
+                                FORM_OBJECT_ALIAS,
+                                FORM_FIELD_NAME_TITLE,
                                 VALIDATION_ERROR_NOT_EMPTY
-                )
+                        )
                 );
-        verify(userService, never()).save(anyString(), anyString(), anyString(), anyString());
-    }
 
+    }
 
     @Test
     void registrationFailsWithErrorConstrainNotBlankWhenLastNameMissing() throws Exception {
@@ -94,13 +102,12 @@ class UserControllerTest extends ControllerTestHelper {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeHasFieldErrorCode(
                                 FORM_OBJECT_ALIAS,
-                        FORM_FIELD_NAME_LAST_NAME,
+                                FORM_FIELD_NAME_LAST_NAME,
                                 VALIDATION_ERROR_NOT_EMPTY
                         )
                 );
-        verify(userService, never()).save(anyString(), anyString(), anyString(), anyString());
-    }
 
+    }
     @Test
     void registrationFailsWithErrorConstrainNotBlankWhenEmailMissing() throws Exception {
 
@@ -116,9 +123,8 @@ class UserControllerTest extends ControllerTestHelper {
                                 VALIDATION_ERROR_NOT_EMPTY
                         )
                 );
-        verify(userService, never()).save(anyString(), anyString(), anyString(), anyString());
-    }
 
+    }
     @Test
     void registrationFailsWithErrorConstrainEmailWhenInvalidEmailGiven() throws Exception {
 
@@ -126,16 +132,16 @@ class UserControllerTest extends ControllerTestHelper {
                         .param("firstName", firstName)
                         .param("lastName", lastName)
                         .param("password", password)
-                        .param("email", "email")
+                        .param("email", "abcd")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeHasFieldErrorCode(
                                 FORM_OBJECT_ALIAS,
                                 FORM_FIELD_NAME_EMAIL,
-                        VALIDATION_ERROR_INVALID_EMAIL
+                                VALIDATION_ERROR_INVALID_EMAIL
                         )
                 );
-        verify(userService, never()).save(anyString(), anyString(), anyString(), anyString());
+
     }
     @Test
     void registrationFailsWithErrorConstrainNotBlankWhenPasswordMissing() throws Exception {
@@ -152,40 +158,30 @@ class UserControllerTest extends ControllerTestHelper {
                                 VALIDATION_ERROR_NOT_EMPTY
                         )
                 );
-        verify(userService, never()).save(anyString(), anyString(), anyString(), anyString());
+
     }
+
 
     @Test
     void registrationFailsIfEmailAlreadyExist() throws Exception {
 
         mockMvc.perform(post("/users")
-                        .param("firstName", firstName)
-                        .param("lastName", lastName)
-                        .param("email", email)
-                        .param("password", password)
+                        .param("firstName", "teresa")
+                        .param("lastName", "lname")
+                        .param("email", "test@gmail.com")
+                        .param("password", "abcd")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-
-        when(userService.save(firstName, lastName, email, password))
-                .thenThrow(EmailAlreadyExistException.class);
         mockMvc.perform(post("/users")
-                        .param("firstName", firstName)
-                        .param("lastName", lastName)
-                        .param("email", email)
-                        .param("password", password)
+                        .param("firstName", "fname")
+                        .param("lastName", "lname")
+                        .param("email", "test@gmail.com")
+                        .param("password", "abcd123")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("registration"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("message"))
                 .andExpect(MockMvcResultMatchers.model().attribute("message", "Email Already Exist"));
-
-    }
-
-    @Test
-    void shouldLoadTheSignUpPage() throws Exception {
-        mockMvc.perform(get("/users"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("text/html;charset=UTF-8"));
 
     }
 

@@ -5,7 +5,7 @@
     <title>Home Page</title>
 </head>
 <body>
-
+<div  th:if="${message != null}"><span th:text="${message}"></span></div>
     <div></div>
     <div class="container">
         <div class="hero-unit">
@@ -16,7 +16,7 @@
             </p>
            <p style="font-color:blue;font-family:verdana;">
                <a href="/books" >View Books</a>
-                <a href="/users/registration" >Sign up</a>
+                <a href="/users" >Sign up</a>
                 <a href="/login" >Login</a>
               </p>
           </div>
