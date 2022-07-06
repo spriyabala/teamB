@@ -11,6 +11,14 @@ version = '0.0.1-SNAPSHOT'
 repositories {
 	mavenCentral()
 }
+jacoco {
+	toolVersion = "0.8.5"
+	reportsDir = file("$buildDir/jacoco")
+}
+
+test {
+	finalizedBy jacocoTestReport
+}
 jacocoTestReport {
 	dependsOn test // tests are required to run before generating the report
 	afterEvaluate {
@@ -23,22 +31,6 @@ jacocoTestReport {
 		}))
 	}
 }
-
-jacoco {
-	toolVersion = "0.8.5"
-	reportsDir = file("$buildDir/jacoco")
-}
-
-jacocoTestCoverageVerification {
-	violationRules {
-		rule {
-			limit {
-				minimum = 1
-			}
-		}
-	}
-}
-
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -61,7 +53,4 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-}
-test {
-	finalizedBy jacocoTestReport // report is always generated after tests run
 }

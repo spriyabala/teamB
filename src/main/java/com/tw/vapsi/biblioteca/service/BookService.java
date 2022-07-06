@@ -1,9 +1,6 @@
 package com.tw.vapsi.biblioteca.service;
 
-import com.tw.vapsi.biblioteca.exception.BookAlreadyCheckedOutException;
-import com.tw.vapsi.biblioteca.exception.BookAlreadyReturnedException;
-import com.tw.vapsi.biblioteca.exception.BookNotAvailableException;
-import com.tw.vapsi.biblioteca.exception.UnAuthorizedUserException;
+import com.tw.vapsi.biblioteca.exception.*;
 import com.tw.vapsi.biblioteca.model.Book;
 import com.tw.vapsi.biblioteca.model.User;
 import com.tw.vapsi.biblioteca.repository.BookRepository;
@@ -31,52 +28,48 @@ public class BookService {
     public List<Book> fetchBooksFromLibrary() {
         return bookRepository.findAll();
     }
-   public Book saveStaticData(Book book) {
-        return bookRepository.save(book);
-    }
+
 
     public Book save(long id, String name, String author) {
-        Book book = new Book(id,name,author);
+        Book book = new Book(id, name, author);
         return bookRepository.save(book);
     }
 
 
-
-    public Book issueCheckedOutBook(long id) throws UnAuthorizedUserException, BookNotAvailableException, BookAlreadyCheckedOutException {
+    public Book issueCheckedOutBook(long id) throws ServiceException {
 
         Optional<User> user = userRepository.findByEmail(userService.fetchUserName());
         isAuthorizedUser(user);
         Optional<Book> book = bookRepository.findById(id);
         isBookAvailableInTheLibrary(book);
         Book checkedOutBook = book.get();
-        System.out.println("@@@@@@@@@@"+checkedOutBook.isAvailable());
-        if(!checkedOutBook.isAvailable())
+        if (!checkedOutBook.isAvailable())
             throw new BookAlreadyCheckedOutException();
         List<Book> checkedOutBookList = user.get().getCheckedOutBook();
         checkedOutBookList.add(checkedOutBook);
         user.get().setCheckedOutBook(checkedOutBookList);
         checkedOutBook.setAvailable(false);
         userRepository.save(user.get());
-        return  bookRepository.save(checkedOutBook);
+        return bookRepository.save(checkedOutBook);
 
     }
 
-    public List<Book> getCheckedOutBooks() throws UnAuthorizedUserException {
+    public List<Book> getCheckedOutBooks() throws ServiceException {
 
         Optional<User> user = userRepository.findByEmail(userService.fetchUserName());
-        if(!user.isPresent())
+        if (!user.isPresent())
             throw new UnAuthorizedUserException();
         return user.get().getCheckedOutBook();
     }
 
-    public Book returnBook(Long id) throws UnAuthorizedUserException, BookNotAvailableException, BookAlreadyReturnedException {
+    public Book returnBook(Long id) throws ServiceException {
 
         Optional<User> user = userRepository.findByEmail(userService.fetchUserName());
         isAuthorizedUser(user);
         Optional<Book> book = bookRepository.findById(id);
         isBookAvailableInTheLibrary(book);
         Book checkedOutBook = book.get();
-        if(checkedOutBook.isAvailable())
+        if (checkedOutBook.isAvailable())
             throw new BookAlreadyReturnedException();
         List<Book> checkedOutBookList = user.get().getCheckedOutBook();
         checkedOutBookList.remove(checkedOutBook);
@@ -86,12 +79,12 @@ public class BookService {
         return bookRepository.save(checkedOutBook);
     }
 
-    public void isAuthorizedUser(Optional<User> user) throws UnAuthorizedUserException {
-        if(!user.isPresent())
+    private void isAuthorizedUser(Optional<User> user) throws UnAuthorizedUserException {
+        if (!user.isPresent())
             throw new UnAuthorizedUserException();
     }
 
-    public void isBookAvailableInTheLibrary(Optional<Book> book) throws BookNotAvailableException {
+    private void isBookAvailableInTheLibrary(Optional<Book> book) throws BookNotAvailableException {
         if (!book.isPresent())
             throw new BookNotAvailableException();
     }

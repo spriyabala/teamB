@@ -1,10 +1,7 @@
 package com.tw.vapsi.biblioteca.service;
 
 
-import com.tw.vapsi.biblioteca.exception.BookAlreadyCheckedOutException;
-import com.tw.vapsi.biblioteca.exception.BookAlreadyReturnedException;
-import com.tw.vapsi.biblioteca.exception.BookNotAvailableException;
-import com.tw.vapsi.biblioteca.exception.UnAuthorizedUserException;
+import com.tw.vapsi.biblioteca.exception.*;
 import com.tw.vapsi.biblioteca.model.Book;
 import com.tw.vapsi.biblioteca.model.User;
 import com.tw.vapsi.biblioteca.repository.BookRepository;
@@ -64,7 +61,7 @@ class   BookServiceTest {
     }
     @Test
     @WithMockUser(username = "1234@gmail.com")
-    void issueBookWhenUserIsAuthorizedAndBookIsAvailable() throws UnAuthorizedUserException, BookNotAvailableException, BookAlreadyCheckedOutException {
+    void issueBookWhenUserIsAuthorizedAndBookIsAvailable() throws Exception{
 
         Book book = new Book("The River of Adventures","Enid Blyton");
         book.setId(2L);
@@ -138,7 +135,7 @@ class   BookServiceTest {
 
     @Test
     @WithMockUser(username = "1234@gmail.com")
-    void shouldGetAllCheckedOutBooksByUser() throws UnAuthorizedUserException {
+    void shouldGetAllCheckedOutBooksByUser() throws ServiceException {
 
         Book bookToBeCheckedOut = new Book("The River of Adventures","Enid Blyton");
         bookToBeCheckedOut.setId(2L);
@@ -210,7 +207,7 @@ class   BookServiceTest {
 
     @Test
     @WithMockUser(username = "1234@gmail.com")
-    void returnBookWhenUserIsAuthorizedAndBookIsAvailable() throws UnAuthorizedUserException, BookNotAvailableException, BookAlreadyReturnedException {
+    void returnBookWhenUserIsAuthorizedAndBookIsAvailable() throws ServiceException {
 
         Book book = new Book("The River of Adventures","Enid Blyton");
         book.setId(2L);

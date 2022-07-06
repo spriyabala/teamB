@@ -130,7 +130,7 @@ class BooksControllerTest extends ControllerTestHelper {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("booksInLibrary"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("errorMessage"))
-                .andExpect(MockMvcResultMatchers.model().attribute("errorMessage", "Book not available for checkout"));
+                .andExpect(MockMvcResultMatchers.model().attribute("errorMessage", "Book not available in library"));
 
     }
 
@@ -195,7 +195,7 @@ class BooksControllerTest extends ControllerTestHelper {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("returnBookSuccess"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("errorMessage"))
-                .andExpect(MockMvcResultMatchers.model().attribute("errorMessage", "Book not Checked Out"));
+                .andExpect(MockMvcResultMatchers.model().attribute("errorMessage", "Book not available in library"));
 
     }
 
@@ -244,26 +244,9 @@ class BooksControllerTest extends ControllerTestHelper {
 
     }
 
-    @Test
-    void return400WhenBookNameIsNull() throws Exception {
 
-        Book book = new Book(2L,"The River of Adventures", "Enid Blyton");
-        mockMvc.perform(post("/books").param("id","2")
-                       .param("author","Enid Blyton"))
-                .andExpect(status().is4xxClientError());
 
-    }
 
-    @Test
-    void return400WhenAuthorNameIsNull() throws Exception {
-
-        Book book = new Book(2L,"The River of Adventures", "Enid Blyton");
-        mockMvc.perform(post("/books").param("id","2")
-                .param("name","The River of Adventures"))
-
-                .andExpect(status().is4xxClientError());
-
-    }
 
 
 

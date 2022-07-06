@@ -54,11 +54,9 @@ public class UserService implements UserDetailsService {
     public String fetchUserName()
     {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userName ;
+        String userName = "";
         if (principal instanceof UserDetails) {
             userName = ((UserDetails) principal).getUsername();
-        } else {
-            userName = principal.toString();
         }
         return userName;
 

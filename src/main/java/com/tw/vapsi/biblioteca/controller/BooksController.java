@@ -46,78 +46,37 @@ public class BooksController {
                              @RequestParam @Valid String name,
                              @RequestParam @Valid String author,
                              HttpServletResponse response) {
-        if (name.isEmpty() || author.isEmpty()) {
-            response.setStatus(400);
-        }
-        else{
-            bookService.save(id,name,author);
-        }
-
-        return "index";
+           bookService.save(id,name,author);
+    return "index";
     }
 
     @GetMapping("/checkout/{id}")
-    public String checkedOut(@PathVariable("id") long id, Model model) {
+    public String checkedOut(@PathVariable("id") long id, Model model) throws Exception{
 
-        try {
+
             bookService.issueCheckedOutBook(id);
             model.addAttribute("message", "Check out successful !!!");
             return "checkOutSuccess";
 
-        } catch (UnAuthorizedUserException e) {
-            model.addAttribute("errorMessage", "Unauthorized user \n Login to continue");
-            return "login";
 
-        } catch (BookNotAvailableException e) {
-            model.addAttribute("errorMessage", "Book not available for checkout");
-            return "booksInLibrary";
-
-        }
-        catch (BookAlreadyCheckedOutException e) {
-            model.addAttribute("errorMessage", "Book already checked out");
-            return "booksInLibrary";
-
-        }
     }
 
     @GetMapping("/checkout")
-    public String viewCheckOutBooks(Model model) {
-        try {
+    public String viewCheckOutBooks(Model model) throws Exception{
+
             List<Book> books = bookService.getCheckedOutBooks();
             model.addAttribute("books", books);
             return "checkOutBooks";
 
-        } catch (UnAuthorizedUserException e) {
-            model.addAttribute("errorMessage", "Unauthorized user \n Login to continue");
-            return "login";
-
-        }
-
     }
 
     @GetMapping("/return/{id}")
-    public String returnBook(@PathVariable("id") long id, Model model) {
+    public String returnBook(@PathVariable("id") long id, Model model) throws Exception{
 
-        try {
             bookService.returnBook(id);
             model.addAttribute("message", "Returned Book successful !!!");
             return "returnBookSuccess";
 
-        } catch (UnAuthorizedUserException e) {
-
-            model.addAttribute("errorMessage", "Unauthorized user \n Login to continue");
-            return "login";
-        }
-        catch (BookNotAvailableException e)
-        {
-            model.addAttribute("errorMessage", "Book not Checked Out");
-            return "returnBookSuccess";
-        }
-        catch (BookAlreadyReturnedException e)
-        {
-            model.addAttribute("errorMessage", "Book already returned");
-            return "returnBookSuccess";
-        }
     }
 
 

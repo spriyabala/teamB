@@ -21,26 +21,6 @@ public class UserForm {
     private String password;
 
 
-
-
-    public UserForm( String firstName, String lastName, String email, String password) {
-
-
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-
-    }
-
-    public UserForm() {
-
-    }
-
-
-
-
-
     public String getFirstName() {
         return firstName;
     }
