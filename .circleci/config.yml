@@ -9,9 +9,16 @@ workflows:
       - test:
            requires:
              - build
-      - deploy:
+      - deploy-stage:
           requires:
             - build
+      - hold:
+          type: approval
+          requires:
+            - test
+      - deploy-prod:
+          requires:
+            - hold
 jobs:
   build:
     docker:
@@ -42,7 +49,7 @@ jobs:
 
 
 
-  deploy:
+  deploy-stage:
     machine: true
     steps:
       - checkout
@@ -57,6 +64,20 @@ jobs:
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a bibilioteca-stage web
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a bibilioteca-stage web
             
+  deploy-prod:
+    machine: true
+    steps:
+      - checkout
+      - attach_workspace:
+           at: ./
+      - run:
+          name: build and push docker image to Heroku
+          command: |
+            set -x
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a bibilioteca-production web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a bibilioteca-production web
             
 
    
