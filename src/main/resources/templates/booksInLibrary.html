@@ -39,7 +39,7 @@ $(document).ready(function() {
 
 <div th:include="~{fragments/header}"></div>
 <div sec:authorize="isAnonymous()">
-   <p> Welcome Anonymous User </p>
+   <p> Welcome Visitor </p>
 </div>
 
 <td th:text="${errorMessage}"></td>
