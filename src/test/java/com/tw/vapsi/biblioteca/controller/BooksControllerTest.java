@@ -130,7 +130,7 @@ class BooksControllerTest extends ControllerTestHelper {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("booksInLibrary"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("errorMessage"))
-                .andExpect(MockMvcResultMatchers.model().attribute("errorMessage", "Book not available in library"));
+                .andExpect(MockMvcResultMatchers.model().attribute("errorMessage", "This Book doesn’t belong to this library"));
 
     }
 
@@ -195,7 +195,7 @@ class BooksControllerTest extends ControllerTestHelper {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("returnBookSuccess"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("errorMessage"))
-                .andExpect(MockMvcResultMatchers.model().attribute("errorMessage", "Book not available in library"));
+                .andExpect(MockMvcResultMatchers.model().attribute("errorMessage", "This Book doesn’t belong to this library"));
 
     }
 
