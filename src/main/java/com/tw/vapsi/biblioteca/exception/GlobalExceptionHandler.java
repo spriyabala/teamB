@@ -32,10 +32,9 @@ public class GlobalExceptionHandler {
     public String handleBookNotAvailableException(BookNotAvailableException exception, Model model, HttpServletRequest request){
 
         String path = request.getPathInfo();
-        model.addAttribute("errorMessage", "Book not available in library");
-       if(path.contains("return")) {
-
-           return "returnBookSuccess";
+        model.addAttribute("errorMessage", "This Book doesn’t belong to this library");
+        if(path!=null && path.contains("return")) {
+            return "returnBookSuccess";
        }
 
         return "booksInLibrary";
