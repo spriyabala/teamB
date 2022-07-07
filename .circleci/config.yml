@@ -45,8 +45,8 @@ jobs:
           path: build/test-results/test
       - store_artifacts:
         #  path: build/test-results/test
-        path: build/jacoco
-        destination: test_coverage
+          path: build/jacoco
+          destination: test_coverage
 
 
 
